@@ -1,0 +1,18 @@
+PROJECT_NAME           = "TP1 Kanban"
+PROJECT_BRIEF          = "Documentacao das classes do projeto TP1 Kanban"
+OUTPUT_DIRECTORY       = build/doxygen
+INPUT                  = include src README.md
+FILE_PATTERNS          = *.hpp *.cpp *.md
+RECURSIVE              = YES
+INPUT_ENCODING         = UTF-8
+USE_MDFILE_AS_MAINPAGE = README.md
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_NO_PARAMDOC       = YES
+WARN_AS_ERROR          = NO
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
