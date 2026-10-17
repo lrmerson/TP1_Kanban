@@ -6,20 +6,10 @@
 
 using namespace std;
 
-class Limite {
-    private:
-        int valor;
-
-    public:
-        void setValor(int);
-        int getValor() const;
-};
-
-///////////////////////////////////////////////////////////////////////////////
-
-class Prioridade {
+class EMAIL {
     private:
         string valor;
+        void validar(const string&) const;
 
     public:
         void setValor(string);
@@ -31,6 +21,43 @@ class Prioridade {
 class Estado {
     private:
         string valor;
+        void validar(const string&) const;
+
+    public:
+        void setValor(string);
+        string getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Identificador {
+    private:
+        string valor;
+        void validar(const string&) const;
+
+    public:
+        void setValor(string);
+        string getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Limite {
+    private:
+        int valor;
+        void validar(const int&) const;
+
+    public:
+        void setValor(int);
+        int getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Nome {
+    private:
+        string valor;
+        void validar(const string&) const;
 
     public:
         void setValor(string);
@@ -42,6 +69,31 @@ class Estado {
 class Papel {
     private:
         string valor;
+        void validar(const string&) const;
+
+    public:
+        void setValor(string);
+        string getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Prioridade {
+    private:
+        string valor;
+        void validar(const string&) const;
+
+    public:
+        void setValor(string);
+        string getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Senha {
+    private:
+        string valor;
+        void validar(const string&) const;
 
     public:
         void setValor(string);
@@ -53,13 +105,35 @@ class Papel {
 class Tamanho {
     private:
         string valor;
+        void validar(const string&) const;
 
     public:
         void setValor(string);
         string getValor() const;
 };
 
+///////////////////////////////////////////////////////////////////////////////
 
+class Texto {
+    private:
+        string valor;
+        void validar(const string&) const;
 
+    public:
+        void setValor(string);
+        string getValor() const;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Timestamp {
+    private:
+        string valor;
+        void validar(const string&) const;
+
+    public:
+        void setValor(string);
+        string getValor() const;
+};
 
 #endif // DOMINIOS_HPP_INCLUDED
