@@ -1,4 +1,4 @@
-#include "dominios.hpp"
+#include "dominio/dominios.hpp"
 #include <cctype>
 
 
@@ -72,13 +72,12 @@ void Estado::validar(const string& valor) const {
     if (valor != "A FAZER" && valor != "FAZENDO" && valor != "FEITO") {
         throw invalid_argument("Estado invalido.");
     }
-
-    this->valor = valor;
 }
 
 void Estado::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Estado::getValor() const {
     return valor;
@@ -100,12 +99,12 @@ void Identificador::validar(const string& valor) const {
             throw invalid_argument("Identificador invalido.");
         }
     }
-    this->valor= valor;
 }
 
 void Identificador::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Identificador::getValor() const {
     return valor;
@@ -117,13 +116,12 @@ void Limite::validar(const int& valor) const {
     if (valor < 1 || valor > 25) {
         throw invalid_argument("Limite invalido.");
     }
-
-    this->valor = valor;
 }
 
 void Limite::setValor(int valor) {
     validar(valor);
     this->valor = valor;
+}
 
 int Limite::getValor() const {
     return valor;
@@ -148,12 +146,12 @@ void Nome::validar(const string& valor) const {
             }
         }
     }
-    this->valor = valor;
 }
 
 void Nome::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Nome::getValor() const {
     return valor;
@@ -165,13 +163,12 @@ void Papel::validar(const string& valor) const {
     if (valor != "GESTOR" && valor != "DESENVOLVEDOR") {
         throw invalid_argument("Papel invalido.");
     }
-
-    this->valor = valor;
 }
 
 void Papel::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Papel::getValor() const {
     return valor;
@@ -183,13 +180,12 @@ void Prioridade::validar(const string& valor) const {
     if (valor != "ALTA" && valor != "MEDIA" && valor != "BAIXA") {
         throw invalid_argument("Prioridade invalida.");
     }
-
-    this->valor = valor;
 }
 
 void Prioridade::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Prioridade::getValor() const {
     return valor;
@@ -217,12 +213,12 @@ void Senha::validar(const string& valor) const {
     if (temletra == 0 || temdigito == 0) {
         throw invalid_argument("Senha invalida.");
     }
-    this->valor = valor;
 }
 
 void Senha::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Senha::getValor() const {
     return valor;
@@ -231,16 +227,15 @@ string Senha::getValor() const {
 ///////////////////////////////////////////////////////////////////////////////
 
 void Tamanho::validar(const string& valor) const {
-    if (valor != "GRANDE" && valor != "MÉDIO" && valor != "PEQUENO") {
+    if (valor != "GRANDE" && valor != "MEDIO" && valor != "PEQUENO") {
         throw invalid_argument("Tamanho invalido.");
     }
-
-    this->valor = valor;
 }
 
 void Tamanho::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Tamanho::getValor() const {
     return valor;
@@ -266,12 +261,12 @@ void Texto::validar(const string& valor) const {
             }
         }
     }
-    this->valor = valor;
 }
 
 void Texto::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Texto::getValor() const {
     return valor;
@@ -361,12 +356,12 @@ void Timestamp::validar(const string& valor) const {
     } else if (mes == "FEV" && (ano % 4 != 0) && dia > 28) {
         throw invalid_argument("Timestamp invalida.");
     }
-    this->valor = valor;
 }
 
 void Timestamp::setValor(string valor) {
     validar(valor);
     this->valor = valor;
+}
 
 string Timestamp::getValor() const {
     return valor;
