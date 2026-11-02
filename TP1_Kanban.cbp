@@ -28,6 +28,15 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="Testes">
+				<Option output="bin\Testes\TP1_Kanban_Testes" />
+				<Option object_output="obj\Testes\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++17" />
@@ -35,47 +44,66 @@
 		</Compiler>
 		<Unit filename="src\main.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
 		<Unit filename="src\dominio\dominios.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\entidades\pessoa.cpp">
+		<Unit filename="src\entidades\entidades.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\entidades\projeto.cpp">
+		<Unit filename="src\servico\containers.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\entidades\quadro.cpp">
+		<Unit filename="src\servico\controladoras_servico.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\entidades\cartao_atividade.cpp">
+		<Unit filename="src\apresentacao\controladoras_apresentacao.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\controladoras\controladora_pessoa.cpp">
+		<Unit filename="src\testes\testes_dominios.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Testes" />
 		</Unit>
-		<Unit filename="src\controladoras\controladora_projeto.cpp">
+		<Unit filename="src\testes\testes_entidades.cpp">
 			<Option compilerVar="CC" />
+			<Option target="Testes" />
 		</Unit>
-		<Unit filename="src\controladoras\controladora_quadro.cpp">
+		<Unit filename="src\testes\main_testes.cpp">
 			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\controladoras\controladora_cartao_atividade.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\apresentacao\apresentacao.cpp">
-			<Option compilerVar="CC" />
+			<Option target="Testes" />
 		</Unit>
 		<Unit filename="include\dominio\dominios.hpp" />
-		<Unit filename="include\entidades\pessoa.hpp" />
-		<Unit filename="include\entidades\projeto.hpp" />
-		<Unit filename="include\entidades\quadro.hpp" />
-		<Unit filename="include\entidades\cartao_atividade.hpp" />
-		<Unit filename="include\controladoras\controladora_pessoa.hpp" />
-		<Unit filename="include\controladoras\controladora_projeto.hpp" />
-		<Unit filename="include\controladoras\controladora_quadro.hpp" />
-		<Unit filename="include\controladoras\controladora_cartao_atividade.hpp" />
-		<Unit filename="include\apresentacao\apresentacao.hpp" />
+		<Unit filename="include\entidades\entidades.hpp" />
+		<Unit filename="include\interfaces\interfaces.hpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include\servico\containers.hpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include\servico\controladoras_servico.hpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include\apresentacao\controladoras_apresentacao.hpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include\testes\testes_dominios.hpp">
+			<Option target="Testes" />
+		</Unit>
+		<Unit filename="include\testes\testes_entidades.hpp">
+			<Option target="Testes" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

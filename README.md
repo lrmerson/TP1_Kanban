@@ -8,19 +8,26 @@ Projeto final da disciplina Técnicas de Programação 1.
 include/
   dominio/       Classes de domínio e validações
   entidades/     Entidades do sistema
-  controladoras/ Regras de aplicação e coordenação dos casos de uso
-  apresentacao/  Interface com o usuário
+  interfaces/    Interfaces (classes abstratas) entre os módulos
+  apresentacao/  Controladoras da camada de apresentação (cin/cout)
+  servico/       Controladoras e contêineres da camada de serviço
+  testes/        Testes de unidade
 src/
   dominio/
   entidades/
-  controladoras/
   apresentacao/
-  main.cpp
+  servico/
+  testes/
+  main.cpp       Montagem do sistema (injeção de dependências)
+smoke_test.txt   Entradas do teste fumaça (um caso por funcionalidade)
 ```
 
-Os arquivos de entidade, controladoras e apresentação são esqueletos iniciais:
-seus atributos e operações devem ser implementados conforme os requisitos
-funcionais do enunciado.
+Pelo terminal, a aplicação pode ser compilada com:
+
+```sh
+g++ -std=c++17 -Iinclude src/main.cpp src/dominio/*.cpp src/entidades/*.cpp src/servico/*.cpp src/apresentacao/*.cpp -o kanban
+./kanban < smoke_test.txt
+```
 
 ## Compilar
 
@@ -35,6 +42,25 @@ O projeto usa o compilador GCC/MinGW. Caso o Code::Blocks não encontre o
 compilador, configure a instalação do MinGW em **Settings > Compiler**.
 
 O projeto exige um compilador com suporte a C++17.
+
+## Testes de unidade
+
+Os testes ficam em `include/testes/` e `src/testes/`, com um executável
+próprio (`src/testes/main_testes.cpp`) separado do `main.cpp` da aplicação.
+Cada classe `TU<Dominio>` verifica o cenário de sucesso (valores válidos são
+aceitos) e o de falha (valores inválidos lançam `invalid_argument` sem alterar
+o valor armazenado).
+
+No Code::Blocks, selecione o alvo `Testes` e use **Build and run** (F9).
+Pelo terminal:
+
+```sh
+g++ -std=c++17 -Iinclude src/dominio/*.cpp src/entidades/*.cpp src/testes/*.cpp -o testes
+./testes
+```
+
+Cada teste imprime `SUCESSO` ou `FALHA`; o programa retorna 0 somente se
+todos passarem.
 
 ## Documentação com Doxygen
 
