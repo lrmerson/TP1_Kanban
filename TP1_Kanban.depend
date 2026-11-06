@@ -1,0 +1,54 @@
+# depslib dependency file v1.0
+1793973326 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\apresentacao\controladoras_apresentacao.cpp
+	"apresentacao/controladoras_apresentacao.hpp"
+	<cstdlib>
+	<cctype>
+	<iomanip>
+	<vector>
+
+1793742423 c:\users\anaca\onedrive\documentos\tp1_kanban\include\apresentacao\controladoras_apresentacao.hpp
+	<iostream>
+	<string>
+	<stdexcept>
+	"interfaces/interfaces.hpp"
+
+1793741489 c:\users\anaca\onedrive\documentos\tp1_kanban\include\interfaces\interfaces.hpp
+	<vector>
+	"dominio/dominios.hpp"
+	"entidades/entidades.hpp"
+
+1793638510 c:\users\anaca\onedrive\documentos\tp1_kanban\include\dominio\dominios.hpp
+	<string>
+	<stdexcept>
+
+1793741489 c:\users\anaca\onedrive\documentos\tp1_kanban\include\entidades\entidades.hpp
+	"dominio/dominios.hpp"
+
+1793741489 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\dominio\dominios.cpp
+	"dominio/dominios.hpp"
+	<cctype>
+
+1793741489 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\entidades\entidades.cpp
+	"entidades/entidades.hpp"
+
+1793741489 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\main.cpp
+	"apresentacao/controladoras_apresentacao.hpp"
+	"servico/controladoras_servico.hpp"
+
+1793741489 c:\users\anaca\onedrive\documentos\tp1_kanban\include\servico\controladoras_servico.hpp
+	<stdexcept>
+	"interfaces/interfaces.hpp"
+	"servico/containers.hpp"
+
+1793741489 c:\users\anaca\onedrive\documentos\tp1_kanban\include\servico\containers.hpp
+	<map>
+	<string>
+	<vector>
+	"entidades/entidades.hpp"
+
+1793741489 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\servico\containers.cpp
+	"servico/containers.hpp"
+
+1793741489 source:c:\users\anaca\onedrive\documentos\tp1_kanban\src\servico\controladoras_servico.cpp
+	"servico/controladoras_servico.hpp"
+

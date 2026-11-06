@@ -43,41 +43,41 @@
 			<Add directory="include" />
 		</Compiler>
 		<Unit filename="src\main.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="src\dominio\dominios.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="src\entidades\entidades.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 		</Unit>
 		<Unit filename="src\servico\containers.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="src\servico\controladoras_servico.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="src\apresentacao\controladoras_apresentacao.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="src\testes\testes_dominios.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Testes" />
 		</Unit>
 		<Unit filename="src\testes\testes_entidades.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Testes" />
 		</Unit>
 		<Unit filename="src\testes\main_testes.cpp">
-			<Option compilerVar="CC" />
+			<Option compilerVar="CPP" />
 			<Option target="Testes" />
 		</Unit>
 		<Unit filename="include\dominio\dominios.hpp" />

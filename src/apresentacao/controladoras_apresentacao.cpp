@@ -1,6 +1,8 @@
 #include "apresentacao/controladoras_apresentacao.hpp"
 #include <cstdlib>
 #include <cctype>
+#include <iomanip>
+#include <vector>
 
 string lerLinha(string rotulo) {
     string texto;
@@ -9,20 +11,152 @@ string lerLinha(string rotulo) {
         cout << endl;
         exit(0);
     }
+    // Remove o retorno de carro quando a entrada vem de arquivo com final de linha do Windows
+    if (!texto.empty() && texto[texto.size() - 1] == '\r') {
+        texto.erase(texto.size() - 1);
+    }
     return texto;
 }
 
-int lerNumero(string rotulo) {
-    string texto = lerLinha(rotulo);
+namespace {
+
+int converterNumero(const string& texto) {
     if (texto.size() == 0 || texto.size() > 9) {
         return -1;
     }
-    for (int i = 0; i < texto.size(); i++) {
+    for (size_t i = 0; i < texto.size(); i++) {
         if (!isdigit(texto[i])) {
             return -1;
         }
     }
     return stoi(texto);
+}
+
+}
+
+int lerNumero(string rotulo) {
+    return converterNumero(lerLinha(rotulo));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+const string SEPARADOR = "+" + string(58, '-') + "+";
+
+const string DICA_EMAIL = "letras minusculas, ex: ana@unb.br";
+const string DICA_NOME = "ate 15 letras, ex: Ana Souza";
+const string DICA_SENHA = "5 caracteres com letras e numeros, ex: abc12";
+const string DICA_PAPEL = "GESTOR ou DESENVOLVEDOR";
+const string DICA_TEXTO = "ate 30 caracteres, inicia com maiuscula e termina com ponto";
+const string DICA_DATA = "DIA-MES-ANO-HH:MM, ex: 01-OUT-2026-09:00";
+const string DICA_PRIORIDADE = "ALTA, MEDIA ou BAIXA";
+const string DICA_TAMANHO = "GRANDE, MEDIO ou PEQUENO";
+const string DICA_LIMITE = "numero de 1 a 25";
+const string DICA_PROJETO = "3 letras + 3 numeros, ex: PRJ001";
+const string DICA_QUADRO = "3 letras + 3 numeros, ex: QDR001";
+const string DICA_CARTAO = "3 letras + 3 numeros, ex: CRT001";
+
+void linha(const string& texto = "") {
+    cout << "| " << left << setw(56) << texto << " |" << endl;
+}
+
+void titulo(const string& texto, const string& subtitulo = "") {
+    cout << endl << SEPARADOR << endl;
+    linha("  " + texto);
+    if (subtitulo != "") {
+        linha("  " + subtitulo);
+    }
+    cout << SEPARADOR << endl;
+}
+
+void secao(const string& texto) {
+    linha();
+    linha(" " + texto + ":");
+}
+
+void item(int numero, const string& texto) {
+    linha("   [" + to_string(numero) + "]" + (numero < 10 ? "  " : " ") + texto);
+}
+
+int lerOpcao() {
+    cout << SEPARADOR << endl;
+    return lerNumero("Escolha uma opcao: ");
+}
+
+void acao(const string& texto, bool pedeDados = true) {
+    cout << endl << ">> " << texto << endl;
+    if (pedeDados) {
+        cout << "   (Digite 0 ou pressione Enter em branco para voltar)" << endl;
+    }
+}
+
+void sucesso(const string& mensagem) {
+    cout << endl << "[OK] " << mensagem << endl;
+}
+
+void erro(const string& mensagem) {
+    cout << endl << "[ERRO] " << mensagem << endl;
+}
+
+void aviso(const string& mensagem) {
+    cout << "  [!] " << mensagem << endl;
+}
+
+void cancelado() {
+    cout << endl << "[--] Operacao cancelada." << endl;
+}
+
+void saida(const string& rotulo, const string& valor) {
+    cout << "  " << left << setw(14) << rotulo << ": " << valor << endl;
+}
+
+void listaItens(const vector<string>& itens) {
+    if (itens.empty()) {
+        cout << "  (nenhum registro encontrado)" << endl;
+        return;
+    }
+    for (size_t i = 0; i < itens.size(); i++) {
+        cout << "  " << (i + 1) << ". " << itens[i] << endl;
+    }
+    cout << "  Total: " << itens.size() << endl;
+}
+
+template <typename T>
+bool lerCampo(const string& rotulo, const string& dica, T& campo) {
+    while (true) {
+        string texto = lerLinha("  " + rotulo + " (" + dica + "): ");
+        if (texto.empty() || texto == "0") {
+            return false;
+        }
+        try {
+            campo.setValor(texto);
+            return true;
+        }
+        catch (invalid_argument &excecao) {
+            aviso(string(excecao.what()) + " Formato: " + dica + ".");
+            aviso("Tente novamente, digite 0 ou pressione Enter para voltar.");
+        }
+    }
+}
+
+bool lerCampo(const string& rotulo, const string& dica, Limite& campo) {
+    while (true) {
+        string texto = lerLinha("  " + rotulo + " (" + dica + "): ");
+        if (texto.empty() || texto == "0") {
+            return false;
+        }
+        try {
+            campo.setValor(converterNumero(texto));
+            return true;
+        }
+        catch (invalid_argument &excecao) {
+            aviso(string(excecao.what()) + " Formato: " + dica + ".");
+            aviso("Tente novamente, digite 0 ou pressione Enter para voltar.");
+        }
+    }
+}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,37 +180,36 @@ void CntrApresentacaoControle::setCntrApresentacaoCartao(IApresentacaoCartao *cn
 void CntrApresentacaoControle::executar() {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== SISTEMA KANBAN =====" << endl;
-        cout << "1 - Autenticar" << endl;
-        cout << "2 - Criar conta" << endl;
-        cout << "0 - Sair" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("SISTEMA KANBAN", "Gestao de projetos com quadros Kanban");
+        item(1, "Entrar");
+        item(2, "Criar conta");
+        item(0, "Sair");
+        opcao = lerOpcao();
         if (opcao == 1) {
             EMAIL email;
             if (cntrApresentacaoPessoa->autenticar(&email)) {
-                cout << "Autenticacao realizada com sucesso." << endl;
+                sucesso("Autenticacao realizada com sucesso.");
                 menuServicos(email);
-            } else {
-                cout << "Falha na autenticacao." << endl;
             }
         } else if (opcao == 2) {
             cntrApresentacaoPessoa->cadastrar();
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
+    cout << endl << "Ate logo!" << endl;
 }
 
 void CntrApresentacaoControle::menuServicos(const EMAIL& email) {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== MENU PRINCIPAL (" << email.getValor() << ") =====" << endl;
-        cout << "1 - Pessoas" << endl;
-        cout << "2 - Projetos" << endl;
-        cout << "3 - Quadros" << endl;
-        cout << "4 - Cartoes de atividade" << endl;
-        cout << "0 - Sair da conta" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("MENU PRINCIPAL", "Conectado como: " + email.getValor());
+        item(1, "Pessoas");
+        item(2, "Projetos");
+        item(3, "Quadros");
+        item(4, "Cartoes de atividade");
+        item(0, "Sair da conta");
+        opcao = lerOpcao();
         if (opcao == 1) {
             if (!cntrApresentacaoPessoa->executar(email)) {
                 return;
@@ -88,7 +221,7 @@ void CntrApresentacaoControle::menuServicos(const EMAIL& email) {
         } else if (opcao == 4) {
             cntrApresentacaoCartao->executar(email);
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
@@ -100,56 +233,61 @@ void CntrApresentacaoPessoa::setCntrServicoPessoa(IServicoPessoa *cntr) {
 }
 
 bool CntrApresentacaoPessoa::autenticar(EMAIL *email) {
-    cout << endl << "===== AUTENTICACAO =====" << endl;
-    try {
-        Senha senha;
-        email->setValor(lerLinha("Email: "));
-        senha.setValor(lerLinha("Senha: "));
-        return cntrServicoPessoa->autenticar(*email, senha);
+    acao("Entrar");
+    Senha senha;
+    if (!lerCampo("E-mail", DICA_EMAIL, *email) || !lerCampo("Senha", DICA_SENHA, senha)) {
+        cancelado();
+        return false;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        if (cntrServicoPessoa->autenticar(*email, senha)) {
+            return true;
+        }
+        erro("E-mail ou senha incorretos.");
+    }
+    catch (runtime_error &excecao) {
+        erro(excecao.what());
     }
     return false;
 }
 
 void CntrApresentacaoPessoa::cadastrar() {
-    cout << endl << "===== CRIAR CONTA =====" << endl;
+    acao("Criar conta");
+    EMAIL email;
+    Nome nome;
+    Senha senha;
+    Papel papel;
+    if (!lerCampo("E-mail", DICA_EMAIL, email) ||
+        !lerCampo("Nome", DICA_NOME, nome) ||
+        !lerCampo("Senha", DICA_SENHA, senha) ||
+        !lerCampo("Papel", DICA_PAPEL, papel)) {
+        cancelado();
+        return;
+    }
     try {
-        EMAIL email;
-        Nome nome;
-        Senha senha;
-        Papel papel;
-        email.setValor(lerLinha("Email: "));
-        nome.setValor(lerLinha("Nome: "));
-        senha.setValor(lerLinha("Senha: "));
-        papel.setValor(lerLinha("Papel (GESTOR ou DESENVOLVEDOR): "));
         Pessoa pessoa;
         pessoa.setEmail(email);
         pessoa.setNome(nome);
         pessoa.setSenha(senha);
         pessoa.setPapel(papel);
         cntrServicoPessoa->criar(pessoa);
-        cout << "Conta criada com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Conta criada com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 bool CntrApresentacaoPessoa::executar(const EMAIL& email) {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== PESSOAS =====" << endl;
-        cout << "1 - Ler pessoa" << endl;
-        cout << "2 - Atualizar minha conta" << endl;
-        cout << "3 - Excluir minha conta" << endl;
-        cout << "4 - Listar pessoas" << endl;
-        cout << "0 - Voltar" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("PESSOAS");
+        item(1, "Ler pessoa");
+        item(2, "Atualizar minha conta");
+        item(3, "Excluir minha conta");
+        item(4, "Listar pessoas");
+        item(0, "Voltar");
+        opcao = lerOpcao();
         if (opcao == 1) {
             ler();
         } else if (opcao == 2) {
@@ -161,75 +299,87 @@ bool CntrApresentacaoPessoa::executar(const EMAIL& email) {
         } else if (opcao == 4) {
             listar();
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
     return true;
 }
 
 void CntrApresentacaoPessoa::ler() {
-    try {
-        EMAIL email;
-        email.setValor(lerLinha("Email da pessoa: "));
-        Pessoa pessoa = cntrServicoPessoa->ler(email);
-        cout << "Email: " << pessoa.getEmail().getValor() << endl;
-        cout << "Nome: " << pessoa.getNome().getValor() << endl;
-        cout << "Papel: " << pessoa.getPapel().getValor() << endl;
+    acao("Ler pessoa");
+    EMAIL email;
+    if (!lerCampo("E-mail da pessoa", DICA_EMAIL, email)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        Pessoa pessoa = cntrServicoPessoa->ler(email);
+        cout << endl;
+        saida("E-mail", pessoa.getEmail().getValor());
+        saida("Nome", pessoa.getNome().getValor());
+        saida("Papel", pessoa.getPapel().getValor());
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoPessoa::atualizar(const EMAIL& email) {
+    acao("Atualizar minha conta");
+    cout << "   E-mail (nao pode ser alterado): " << email.getValor() << endl;
+    Nome nome;
+    Senha senha;
+    Papel papel;
+    if (!lerCampo("Novo nome", DICA_NOME, nome) ||
+        !lerCampo("Nova senha", DICA_SENHA, senha) ||
+        !lerCampo("Novo papel", DICA_PAPEL, papel)) {
+        cancelado();
+        return;
+    }
     try {
-        Nome nome;
-        Senha senha;
-        Papel papel;
-        cout << "Email (nao pode ser alterado): " << email.getValor() << endl;
-        nome.setValor(lerLinha("Novo nome: "));
-        senha.setValor(lerLinha("Nova senha: "));
-        papel.setValor(lerLinha("Novo papel (GESTOR ou DESENVOLVEDOR): "));
         Pessoa pessoa;
         pessoa.setEmail(email);
         pessoa.setNome(nome);
         pessoa.setSenha(senha);
         pessoa.setPapel(papel);
         cntrServicoPessoa->atualizar(pessoa);
-        cout << "Conta atualizada com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Conta atualizada com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 bool CntrApresentacaoPessoa::excluir(const EMAIL& email) {
-    string resposta = lerLinha("Confirma exclusao da conta? (S/N): ");
+    acao("Excluir minha conta", false);
+    string resposta = lerLinha("  Tem certeza que deseja excluir sua conta? (S/N): ");
     if (resposta != "S" && resposta != "s") {
+        cancelado();
         return false;
     }
     try {
         cntrServicoPessoa->excluir(email);
-        cout << "Conta excluida com sucesso." << endl;
+        sucesso("Conta excluida com sucesso.");
         return true;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
     return false;
 }
 
 void CntrApresentacaoPessoa::listar() {
-    vector<EMAIL> emails = cntrServicoPessoa->listar();
-    cout << "Pessoas cadastradas:" << endl;
-    for (int i = 0; i < emails.size(); i++) {
-        cout << "- " << emails[i].getValor() << endl;
+    acao("Pessoas cadastradas", false);
+    try {
+        vector<EMAIL> emails = cntrServicoPessoa->listar();
+        vector<string> itens;
+        for (size_t i = 0; i < emails.size(); i++) {
+            itens.push_back(emails[i].getValor());
+        }
+        listaItens(itens);
+    }
+    catch (runtime_error &excecao) {
+        erro(excecao.what());
     }
 }
 
@@ -242,14 +392,14 @@ void CntrApresentacaoProjeto::setCntrServicoProjeto(IServicoProjeto *cntr) {
 void CntrApresentacaoProjeto::executar(const EMAIL& email) {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== PROJETOS =====" << endl;
-        cout << "1 - Criar projeto" << endl;
-        cout << "2 - Ler projeto" << endl;
-        cout << "3 - Atualizar projeto" << endl;
-        cout << "4 - Excluir projeto" << endl;
-        cout << "5 - Listar projetos" << endl;
-        cout << "0 - Voltar" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("PROJETOS");
+        item(1, "Criar projeto");
+        item(2, "Ler projeto");
+        item(3, "Atualizar projeto");
+        item(4, "Excluir projeto");
+        item(5, "Listar projetos");
+        item(0, "Voltar");
+        opcao = lerOpcao();
         if (opcao == 1) {
             criar(email);
         } else if (opcao == 2) {
@@ -261,23 +411,27 @@ void CntrApresentacaoProjeto::executar(const EMAIL& email) {
         } else if (opcao == 5) {
             listar();
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
 
 void CntrApresentacaoProjeto::criar(const EMAIL& email) {
+    acao("Criar projeto");
+    Identificador identificador;
+    Nome nome;
+    Texto descricao;
+    Timestamp inicio;
+    Timestamp termino;
+    if (!lerCampo("Identificador", DICA_PROJETO, identificador) ||
+        !lerCampo("Nome", DICA_NOME, nome) ||
+        !lerCampo("Descricao", DICA_TEXTO, descricao) ||
+        !lerCampo("Inicio", DICA_DATA, inicio) ||
+        !lerCampo("Termino", DICA_DATA, termino)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        Nome nome;
-        Texto descricao;
-        Timestamp inicio;
-        Timestamp termino;
-        identificador.setValor(lerLinha("Identificador (ex: PRJ001): "));
-        nome.setValor(lerLinha("Nome: "));
-        descricao.setValor(lerLinha("Descricao: "));
-        inicio.setValor(lerLinha("Inicio (DIA-MES-ANO-HH:MM): "));
-        termino.setValor(lerLinha("Termino (DIA-MES-ANO-HH:MM): "));
         Projeto projeto;
         projeto.setIdentificador(identificador);
         projeto.setNome(nome);
@@ -285,47 +439,50 @@ void CntrApresentacaoProjeto::criar(const EMAIL& email) {
         projeto.setInicio(inicio);
         projeto.setTermino(termino);
         cntrServicoProjeto->criar(projeto, email);
-        cout << "Projeto criado com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Projeto criado com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoProjeto::ler() {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do projeto: "));
-        Projeto projeto = cntrServicoProjeto->ler(identificador);
-        cout << "Identificador: " << projeto.getIdentificador().getValor() << endl;
-        cout << "Nome: " << projeto.getNome().getValor() << endl;
-        cout << "Descricao: " << projeto.getDescricao().getValor() << endl;
-        cout << "Inicio: " << projeto.getInicio().getValor() << endl;
-        cout << "Termino: " << projeto.getTermino().getValor() << endl;
+    acao("Ler projeto");
+    Identificador identificador;
+    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        Projeto projeto = cntrServicoProjeto->ler(identificador);
+        cout << endl;
+        saida("Identificador", projeto.getIdentificador().getValor());
+        saida("Nome", projeto.getNome().getValor());
+        saida("Descricao", projeto.getDescricao().getValor());
+        saida("Inicio", projeto.getInicio().getValor());
+        saida("Termino", projeto.getTermino().getValor());
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoProjeto::atualizar(const EMAIL& email) {
+    acao("Atualizar projeto");
+    Identificador identificador;
+    Nome nome;
+    Texto descricao;
+    Timestamp inicio;
+    Timestamp termino;
+    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador) ||
+        !lerCampo("Novo nome", DICA_NOME, nome) ||
+        !lerCampo("Nova descricao", DICA_TEXTO, descricao) ||
+        !lerCampo("Novo inicio", DICA_DATA, inicio) ||
+        !lerCampo("Novo termino", DICA_DATA, termino)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        Nome nome;
-        Texto descricao;
-        Timestamp inicio;
-        Timestamp termino;
-        identificador.setValor(lerLinha("Identificador do projeto (nao pode ser alterado): "));
-        nome.setValor(lerLinha("Novo nome: "));
-        descricao.setValor(lerLinha("Nova descricao: "));
-        inicio.setValor(lerLinha("Novo inicio (DIA-MES-ANO-HH:MM): "));
-        termino.setValor(lerLinha("Novo termino (DIA-MES-ANO-HH:MM): "));
         Projeto projeto;
         projeto.setIdentificador(identificador);
         projeto.setNome(nome);
@@ -333,36 +490,41 @@ void CntrApresentacaoProjeto::atualizar(const EMAIL& email) {
         projeto.setInicio(inicio);
         projeto.setTermino(termino);
         cntrServicoProjeto->atualizar(projeto, email);
-        cout << "Projeto atualizado com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Projeto atualizado com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoProjeto::excluir(const EMAIL& email) {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do projeto: "));
-        cntrServicoProjeto->excluir(identificador, email);
-        cout << "Projeto excluido com sucesso." << endl;
+    acao("Excluir projeto");
+    Identificador identificador;
+    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        cntrServicoProjeto->excluir(identificador, email);
+        sucesso("Projeto excluido com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoProjeto::listar() {
-    vector<Identificador> identificadores = cntrServicoProjeto->listar();
-    cout << "Projetos cadastrados:" << endl;
-    for (int i = 0; i < identificadores.size(); i++) {
-        cout << "- " << identificadores[i].getValor() << endl;
+    acao("Projetos cadastrados", false);
+    try {
+        vector<Identificador> identificadores = cntrServicoProjeto->listar();
+        vector<string> itens;
+        for (size_t i = 0; i < identificadores.size(); i++) {
+            itens.push_back(identificadores[i].getValor());
+        }
+        listaItens(itens);
+    }
+    catch (runtime_error &excecao) {
+        erro(excecao.what());
     }
 }
 
@@ -375,14 +537,14 @@ void CntrApresentacaoQuadro::setCntrServicoQuadro(IServicoQuadro *cntr) {
 void CntrApresentacaoQuadro::executar(const EMAIL& email) {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== QUADROS =====" << endl;
-        cout << "1 - Criar quadro" << endl;
-        cout << "2 - Ler quadro" << endl;
-        cout << "3 - Atualizar quadro" << endl;
-        cout << "4 - Excluir quadro" << endl;
-        cout << "5 - Listar quadros de um projeto" << endl;
-        cout << "0 - Voltar" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("QUADROS");
+        item(1, "Criar quadro");
+        item(2, "Ler quadro");
+        item(3, "Atualizar quadro");
+        item(4, "Excluir quadro");
+        item(5, "Listar quadros de um projeto");
+        item(0, "Voltar");
+        opcao = lerOpcao();
         if (opcao == 1) {
             criar(email);
         } else if (opcao == 2) {
@@ -394,106 +556,114 @@ void CntrApresentacaoQuadro::executar(const EMAIL& email) {
         } else if (opcao == 5) {
             listar();
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
 
 void CntrApresentacaoQuadro::criar(const EMAIL& email) {
+    acao("Criar quadro");
+    Identificador projeto;
+    Identificador identificador;
+    Nome nome;
+    Limite limite;
+    if (!lerCampo("Identificador do projeto", DICA_PROJETO, projeto) ||
+        !lerCampo("Identificador do quadro", DICA_QUADRO, identificador) ||
+        !lerCampo("Nome", DICA_NOME, nome) ||
+        !lerCampo("Limite WIP", DICA_LIMITE, limite)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador projeto;
-        Identificador identificador;
-        Nome nome;
-        Limite limite;
-        projeto.setValor(lerLinha("Identificador do projeto: "));
-        identificador.setValor(lerLinha("Identificador do quadro (ex: QDR001): "));
-        nome.setValor(lerLinha("Nome: "));
-        limite.setValor(lerNumero("Limite WIP (1 a 25): "));
         Quadro quadro;
         quadro.setIdentificador(identificador);
         quadro.setNome(nome);
         quadro.setLimite(limite);
         cntrServicoQuadro->criar(quadro, projeto, email);
-        cout << "Quadro criado com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Quadro criado com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoQuadro::ler() {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do quadro: "));
-        Quadro quadro = cntrServicoQuadro->ler(identificador);
-        cout << "Identificador: " << quadro.getIdentificador().getValor() << endl;
-        cout << "Nome: " << quadro.getNome().getValor() << endl;
-        cout << "Limite WIP: " << quadro.getLimite().getValor() << endl;
+    acao("Ler quadro");
+    Identificador identificador;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        Quadro quadro = cntrServicoQuadro->ler(identificador);
+        cout << endl;
+        saida("Identificador", quadro.getIdentificador().getValor());
+        saida("Nome", quadro.getNome().getValor());
+        saida("Limite WIP", to_string(quadro.getLimite().getValor()));
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoQuadro::atualizar(const EMAIL& email) {
+    acao("Atualizar quadro");
+    Identificador identificador;
+    Nome nome;
+    Limite limite;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, identificador) ||
+        !lerCampo("Novo nome", DICA_NOME, nome) ||
+        !lerCampo("Novo limite WIP", DICA_LIMITE, limite)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        Nome nome;
-        Limite limite;
-        identificador.setValor(lerLinha("Identificador do quadro (nao pode ser alterado): "));
-        nome.setValor(lerLinha("Novo nome: "));
-        limite.setValor(lerNumero("Novo limite WIP (1 a 25): "));
         Quadro quadro;
         quadro.setIdentificador(identificador);
         quadro.setNome(nome);
         quadro.setLimite(limite);
         cntrServicoQuadro->atualizar(quadro, email);
-        cout << "Quadro atualizado com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Quadro atualizado com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoQuadro::excluir(const EMAIL& email) {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do quadro: "));
-        cntrServicoQuadro->excluir(identificador, email);
-        cout << "Quadro excluido com sucesso." << endl;
+    acao("Excluir quadro");
+    Identificador identificador;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        cntrServicoQuadro->excluir(identificador, email);
+        sucesso("Quadro excluido com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoQuadro::listar() {
-    try {
-        Identificador projeto;
-        projeto.setValor(lerLinha("Identificador do projeto: "));
-        vector<Identificador> identificadores = cntrServicoQuadro->listar(projeto);
-        cout << "Quadros do projeto:" << endl;
-        for (int i = 0; i < identificadores.size(); i++) {
-            cout << "- " << identificadores[i].getValor() << endl;
-        }
+    acao("Quadros de um projeto");
+    Identificador projeto;
+    if (!lerCampo("Identificador do projeto", DICA_PROJETO, projeto)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        vector<Identificador> identificadores = cntrServicoQuadro->listar(projeto);
+        vector<string> itens;
+        for (size_t i = 0; i < identificadores.size(); i++) {
+            itens.push_back(identificadores[i].getValor());
+        }
+        cout << endl;
+        listaItens(itens);
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
@@ -506,20 +676,23 @@ void CntrApresentacaoCartao::setCntrServicoCartao(IServicoCartao *cntr) {
 void CntrApresentacaoCartao::executar(const EMAIL& email) {
     int opcao = -1;
     while (opcao != 0) {
-        cout << endl << "===== CARTOES DE ATIVIDADE =====" << endl;
-        cout << "1 - Criar cartao" << endl;
-        cout << "2 - Ler cartao" << endl;
-        cout << "3 - Atualizar cartao" << endl;
-        cout << "4 - Excluir cartao" << endl;
-        cout << "5 - Listar cartoes de um quadro" << endl;
-        cout << "6 - Mover cartao" << endl;
-        cout << "7 - Ler tempo de ciclo" << endl;
-        cout << "8 - Ler tempo de ciclo medio" << endl;
-        cout << "9 - Ler lead time" << endl;
-        cout << "10 - Ler lead time medio" << endl;
-        cout << "11 - Ler WIP" << endl;
-        cout << "0 - Voltar" << endl;
-        opcao = lerNumero("Opcao: ");
+        titulo("CARTOES DE ATIVIDADE");
+        secao("Cartoes");
+        item(1, "Criar cartao");
+        item(2, "Ler cartao");
+        item(3, "Atualizar cartao");
+        item(4, "Excluir cartao");
+        item(5, "Listar cartoes de um quadro");
+        item(6, "Mover cartao para a proxima coluna");
+        secao("Metricas");
+        item(7, "Tempo de ciclo de um cartao");
+        item(8, "Tempo de ciclo medio de um quadro");
+        item(9, "Lead time de um cartao");
+        item(10, "Lead time medio de um quadro");
+        item(11, "WIP de um quadro");
+        linha();
+        item(0, "Voltar");
+        opcao = lerOpcao();
         if (opcao == 1) {
             criar(email);
         } else if (opcao == 2) {
@@ -543,27 +716,31 @@ void CntrApresentacaoCartao::executar(const EMAIL& email) {
         } else if (opcao == 11) {
             lerWIP();
         } else if (opcao != 0) {
-            cout << "Opcao invalida." << endl;
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
 
 void CntrApresentacaoCartao::criar(const EMAIL& email) {
+    acao("Criar cartao");
+    Identificador quadro;
+    Identificador identificador;
+    Nome nome;
+    Texto descricao;
+    Prioridade prioridade;
+    Tamanho tamanho;
+    Timestamp entrada;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, quadro) ||
+        !lerCampo("Identificador do cartao", DICA_CARTAO, identificador) ||
+        !lerCampo("Nome", DICA_NOME, nome) ||
+        !lerCampo("Descricao", DICA_TEXTO, descricao) ||
+        !lerCampo("Prioridade", DICA_PRIORIDADE, prioridade) ||
+        !lerCampo("Tamanho", DICA_TAMANHO, tamanho) ||
+        !lerCampo("Entrada em A FAZER", DICA_DATA, entrada)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador quadro;
-        Identificador identificador;
-        Nome nome;
-        Texto descricao;
-        Prioridade prioridade;
-        Tamanho tamanho;
-        Timestamp entrada;
-        quadro.setValor(lerLinha("Identificador do quadro: "));
-        identificador.setValor(lerLinha("Identificador do cartao (ex: CRT001): "));
-        nome.setValor(lerLinha("Nome: "));
-        descricao.setValor(lerLinha("Descricao: "));
-        prioridade.setValor(lerLinha("Prioridade (ALTA, MEDIA ou BAIXA): "));
-        tamanho.setValor(lerLinha("Tamanho (GRANDE, MEDIO ou PEQUENO): "));
-        entrada.setValor(lerLinha("Entrada em A FAZER (DIA-MES-ANO-HH:MM): "));
         CartaoAtividade cartao;
         cartao.setIdentificador(identificador);
         cartao.setNome(nome);
@@ -572,20 +749,21 @@ void CntrApresentacaoCartao::criar(const EMAIL& email) {
         cartao.setTamanho(tamanho);
         cartao.setEntrada(entrada);
         cntrServicoCartao->criar(cartao, quadro, email);
-        cout << "Cartao criado com sucesso na coluna A FAZER." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Cartao criado com sucesso na coluna A FAZER.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::ler() {
+    acao("Ler cartao");
+    Identificador identificador;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do cartao: "));
         CartaoAtividade cartao = cntrServicoCartao->ler(identificador);
         string inicio = cartao.getInicio().getValor();
         string termino = cartao.getTermino().getValor();
@@ -595,36 +773,38 @@ void CntrApresentacaoCartao::ler() {
         if (termino == "") {
             termino = "-";
         }
-        cout << "Identificador: " << cartao.getIdentificador().getValor() << endl;
-        cout << "Nome: " << cartao.getNome().getValor() << endl;
-        cout << "Descricao: " << cartao.getDescricao().getValor() << endl;
-        cout << "Prioridade: " << cartao.getPrioridade().getValor() << endl;
-        cout << "Estado: " << cartao.getEstado().getValor() << endl;
-        cout << "Tamanho: " << cartao.getTamanho().getValor() << endl;
-        cout << "Entrada: " << cartao.getEntrada().getValor() << endl;
-        cout << "Inicio: " << inicio << endl;
-        cout << "Termino: " << termino << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        cout << endl;
+        saida("Identificador", cartao.getIdentificador().getValor());
+        saida("Nome", cartao.getNome().getValor());
+        saida("Descricao", cartao.getDescricao().getValor());
+        saida("Prioridade", cartao.getPrioridade().getValor());
+        saida("Estado", cartao.getEstado().getValor());
+        saida("Tamanho", cartao.getTamanho().getValor());
+        saida("Entrada", cartao.getEntrada().getValor());
+        saida("Inicio", inicio);
+        saida("Termino", termino);
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::atualizar(const EMAIL& email) {
+    acao("Atualizar cartao");
+    Identificador identificador;
+    Nome nome;
+    Texto descricao;
+    Prioridade prioridade;
+    Tamanho tamanho;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador) ||
+        !lerCampo("Novo nome", DICA_NOME, nome) ||
+        !lerCampo("Nova descricao", DICA_TEXTO, descricao) ||
+        !lerCampo("Nova prioridade", DICA_PRIORIDADE, prioridade) ||
+        !lerCampo("Novo tamanho", DICA_TAMANHO, tamanho)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        Nome nome;
-        Texto descricao;
-        Prioridade prioridade;
-        Tamanho tamanho;
-        identificador.setValor(lerLinha("Identificador do cartao (nao pode ser alterado): "));
-        nome.setValor(lerLinha("Novo nome: "));
-        descricao.setValor(lerLinha("Nova descricao: "));
-        prioridade.setValor(lerLinha("Nova prioridade (ALTA, MEDIA ou BAIXA): "));
-        tamanho.setValor(lerLinha("Novo tamanho (GRANDE, MEDIO ou PEQUENO): "));
         CartaoAtividade cartao;
         cartao.setIdentificador(identificador);
         cartao.setNome(nome);
@@ -632,138 +812,145 @@ void CntrApresentacaoCartao::atualizar(const EMAIL& email) {
         cartao.setPrioridade(prioridade);
         cartao.setTamanho(tamanho);
         cntrServicoCartao->atualizar(cartao, email);
-        cout << "Cartao atualizado com sucesso." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Cartao atualizado com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::excluir(const EMAIL& email) {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do cartao: "));
-        cntrServicoCartao->excluir(identificador, email);
-        cout << "Cartao excluido com sucesso." << endl;
+    acao("Excluir cartao");
+    Identificador identificador;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        cntrServicoCartao->excluir(identificador, email);
+        sucesso("Cartao excluido com sucesso.");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::listar() {
-    try {
-        Identificador quadro;
-        quadro.setValor(lerLinha("Identificador do quadro: "));
-        vector<Identificador> identificadores = cntrServicoCartao->listar(quadro);
-        cout << "Cartoes do quadro:" << endl;
-        for (int i = 0; i < identificadores.size(); i++) {
-            cout << "- " << identificadores[i].getValor() << endl;
-        }
+    acao("Cartoes de um quadro");
+    Identificador quadro;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, quadro)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        vector<Identificador> identificadores = cntrServicoCartao->listar(quadro);
+        vector<string> itens;
+        for (size_t i = 0; i < identificadores.size(); i++) {
+            itens.push_back(identificadores[i].getValor());
+        }
+        cout << endl;
+        listaItens(itens);
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::mover() {
+    acao("Mover cartao");
+    Identificador identificador;
+    Timestamp momento;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador) ||
+        !lerCampo("Momento da movimentacao", DICA_DATA, momento)) {
+        cancelado();
+        return;
+    }
     try {
-        Identificador identificador;
-        Timestamp momento;
-        identificador.setValor(lerLinha("Identificador do cartao: "));
-        momento.setValor(lerLinha("Momento da movimentacao (DIA-MES-ANO-HH:MM): "));
         cntrServicoCartao->mover(identificador, momento);
         CartaoAtividade cartao = cntrServicoCartao->ler(identificador);
-        cout << "Cartao movido para " << cartao.getEstado().getValor() << "." << endl;
-    }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+        sucesso("Cartao movido para " + cartao.getEstado().getValor() + ".");
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::lerTempoCiclo() {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do cartao: "));
-        int tempo = cntrServicoCartao->lerTempoCiclo(identificador);
-        cout << "Tempo de ciclo: " << tempo << " minutos." << endl;
+    acao("Tempo de ciclo de um cartao");
+    Identificador identificador;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        int tempo = cntrServicoCartao->lerTempoCiclo(identificador);
+        cout << endl << "  Tempo de ciclo: " << tempo << " minutos." << endl;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::lerTempoCicloMedio() {
-    try {
-        Identificador quadro;
-        quadro.setValor(lerLinha("Identificador do quadro: "));
-        double tempo = cntrServicoCartao->lerTempoCicloMedio(quadro);
-        cout << "Tempo de ciclo medio: " << tempo << " minutos." << endl;
+    acao("Tempo de ciclo medio de um quadro");
+    Identificador quadro;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, quadro)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        double tempo = cntrServicoCartao->lerTempoCicloMedio(quadro);
+        cout << endl << "  Tempo de ciclo medio: " << tempo << " minutos." << endl;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::lerLeadTime() {
-    try {
-        Identificador identificador;
-        identificador.setValor(lerLinha("Identificador do cartao: "));
-        int tempo = cntrServicoCartao->lerLeadTime(identificador);
-        cout << "Lead time: " << tempo << " minutos." << endl;
+    acao("Lead time de um cartao");
+    Identificador identificador;
+    if (!lerCampo("Identificador do cartao", DICA_CARTAO, identificador)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        int tempo = cntrServicoCartao->lerLeadTime(identificador);
+        cout << endl << "  Lead time: " << tempo << " minutos." << endl;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::lerLeadTimeMedio() {
-    try {
-        Identificador quadro;
-        quadro.setValor(lerLinha("Identificador do quadro: "));
-        double tempo = cntrServicoCartao->lerLeadTimeMedio(quadro);
-        cout << "Lead time medio: " << tempo << " minutos." << endl;
+    acao("Lead time medio de um quadro");
+    Identificador quadro;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, quadro)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        double tempo = cntrServicoCartao->lerLeadTimeMedio(quadro);
+        cout << endl << "  Lead time medio: " << tempo << " minutos." << endl;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }
 
 void CntrApresentacaoCartao::lerWIP() {
-    try {
-        Identificador quadro;
-        quadro.setValor(lerLinha("Identificador do quadro: "));
-        int wip = cntrServicoCartao->lerWIP(quadro);
-        cout << "WIP (cartoes em FAZENDO): " << wip << endl;
+    acao("WIP de um quadro");
+    Identificador quadro;
+    if (!lerCampo("Identificador do quadro", DICA_QUADRO, quadro)) {
+        cancelado();
+        return;
     }
-    catch (invalid_argument &excecao) {
-        cout << "Dado invalido: " << excecao.what() << endl;
+    try {
+        int wip = cntrServicoCartao->lerWIP(quadro);
+        cout << endl << "  WIP (cartoes em FAZENDO): " << wip << endl;
     }
     catch (runtime_error &excecao) {
-        cout << "Erro: " << excecao.what() << endl;
+        erro(excecao.what());
     }
 }

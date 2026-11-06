@@ -43,6 +43,10 @@ compilador, configure a instalação do MinGW em **Settings > Compiler**.
 
 O projeto exige um compilador com suporte a C++17.
 
+Nos menus, digite `0` e pressione Enter para voltar. Ao preencher os campos
+de uma operação, digite `0` ou pressione Enter em branco para cancelá-la e
+voltar ao menu. Um dado inválido pode ser digitado novamente no mesmo campo.
+
 ## Testes de unidade
 
 Os testes ficam em `include/testes/` e `src/testes/`, com um executável
