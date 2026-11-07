@@ -25,8 +25,6 @@ class TUEMAIL {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TUEstado {
     private:
         const static vector<string> VALORES_VALIDOS;
@@ -43,8 +41,6 @@ class TUEstado {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUIdentificador {
     private:
@@ -63,8 +59,6 @@ class TUIdentificador {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TULimite {
     private:
         const static vector<int> VALORES_VALIDOS;
@@ -81,8 +75,6 @@ class TULimite {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUNome {
     private:
@@ -101,8 +93,6 @@ class TUNome {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TUPapel {
     private:
         const static vector<string> VALORES_VALIDOS;
@@ -119,8 +109,6 @@ class TUPapel {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUPrioridade {
     private:
@@ -139,8 +127,6 @@ class TUPrioridade {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TUSenha {
     private:
         const static vector<string> VALORES_VALIDOS;
@@ -157,8 +143,6 @@ class TUSenha {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUTamanho {
     private:
@@ -177,8 +161,6 @@ class TUTamanho {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TUTexto {
     private:
         const static vector<string> VALORES_VALIDOS;
@@ -195,8 +177,6 @@ class TUTexto {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUTimestamp {
     private:

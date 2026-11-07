@@ -66,8 +66,6 @@ string EMAIL::getValor() const {
     return valor;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void Estado::validar(const string& valor) const {
     if (valor != "A FAZER" && valor != "FAZENDO" && valor != "FEITO") {
         throw invalid_argument("Estado invalido.");
@@ -82,8 +80,6 @@ void Estado::setValor(string valor) {
 string Estado::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void Identificador::validar(const string& valor) const {
     if (valor.size() != 6) {
@@ -110,8 +106,6 @@ string Identificador::getValor() const {
     return valor;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void Limite::validar(const int& valor) const {
     if (valor < 1 || valor > 25) {
         throw invalid_argument("Limite invalido.");
@@ -126,8 +120,6 @@ void Limite::setValor(int valor) {
 int Limite::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void Nome::validar(const string& valor) const {
     if (valor.size() == 0 || valor.size() > 15) {
@@ -157,8 +149,6 @@ string Nome::getValor() const {
     return valor;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void Papel::validar(const string& valor) const {
     if (valor != "GESTOR" && valor != "DESENVOLVEDOR") {
         throw invalid_argument("Papel invalido.");
@@ -174,8 +164,6 @@ string Papel::getValor() const {
     return valor;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void Prioridade::validar(const string& valor) const {
     if (valor != "ALTA" && valor != "MEDIA" && valor != "BAIXA") {
         throw invalid_argument("Prioridade invalida.");
@@ -190,8 +178,6 @@ void Prioridade::setValor(string valor) {
 string Prioridade::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void Senha::validar(const string& valor) const {
     if (valor.size() != 5) {
@@ -224,8 +210,6 @@ string Senha::getValor() const {
     return valor;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void Tamanho::validar(const string& valor) const {
     if (valor != "GRANDE" && valor != "MEDIO" && valor != "PEQUENO") {
         throw invalid_argument("Tamanho invalido.");
@@ -240,8 +224,6 @@ void Tamanho::setValor(string valor) {
 string Tamanho::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void Texto::validar(const string& valor) const {
     if (valor.size() == 0 || valor.size() > 30) {
@@ -271,8 +253,6 @@ void Texto::setValor(string valor) {
 string Texto::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void Timestamp::validar(const string& valor) const {
     //verifica se tem exatamente 3 hifens no valor inserido
@@ -366,5 +346,3 @@ void Timestamp::setValor(string valor) {
 string Timestamp::getValor() const {
     return valor;
 }
-
-///////////////////////////////////////////////////////////////////////////////

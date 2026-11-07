@@ -38,8 +38,6 @@ int lerNumero(string rotulo) {
     return converterNumero(lerLinha(rotulo));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 namespace {
 
 const string SEPARADOR = "+" + string(58, '-') + "+";
@@ -159,8 +157,6 @@ bool lerCampo(const string& rotulo, const string& dica, Limite& campo) {
 
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void CntrApresentacaoControle::setCntrApresentacaoPessoa(IApresentacaoPessoa *cntr) {
     cntrApresentacaoPessoa = cntr;
 }
@@ -225,8 +221,6 @@ void CntrApresentacaoControle::menuServicos(const EMAIL& email) {
         }
     }
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void CntrApresentacaoPessoa::setCntrServicoPessoa(IServicoPessoa *cntr) {
     cntrServicoPessoa = cntr;
@@ -383,8 +377,6 @@ void CntrApresentacaoPessoa::listar() {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void CntrApresentacaoProjeto::setCntrServicoProjeto(IServicoProjeto *cntr) {
     cntrServicoProjeto = cntr;
 }
@@ -528,8 +520,6 @@ void CntrApresentacaoProjeto::listar() {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void CntrApresentacaoQuadro::setCntrServicoQuadro(IServicoQuadro *cntr) {
     cntrServicoQuadro = cntr;
 }
@@ -666,8 +656,6 @@ void CntrApresentacaoQuadro::listar() {
         erro(excecao.what());
     }
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void CntrApresentacaoCartao::setCntrServicoCartao(IServicoCartao *cntr) {
     cntrServicoCartao = cntr;

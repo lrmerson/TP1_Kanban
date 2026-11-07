@@ -67,8 +67,6 @@ vector<EMAIL> CntrServicoPessoa::listar() {
     return emails;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 void CntrServicoProjeto::verificarGestor(const Identificador& identificador, const EMAIL& usuario) {
     Projeto projeto;
     projeto.setIdentificador(identificador);
@@ -121,8 +119,6 @@ vector<Identificador> CntrServicoProjeto::listar() {
     }
     return identificadores;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void CntrServicoQuadro::verificarGestor(const string& projeto, const EMAIL& usuario) {
     if (ContainerProjeto::getInstancia()->getGestor(projeto) != usuario.getValor()) {
@@ -191,8 +187,6 @@ vector<Identificador> CntrServicoQuadro::listar(const Identificador& projeto) {
     }
     return identificadores;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 void CntrServicoCartao::verificarGestor(const string& quadro, const EMAIL& usuario) {
     string projeto = ContainerQuadro::getInstancia()->getProjeto(quadro);

@@ -25,8 +25,6 @@ class TUPessoa {
         int run();
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
 class TUProjeto {
     private:
         const static string IDENTIFICADOR_VALIDO;
@@ -45,8 +43,6 @@ class TUProjeto {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUCartaoAtividade {
     private:
@@ -70,8 +66,6 @@ class TUCartaoAtividade {
         const static int FALHA = -1;
         int run();
 };
-
-///////////////////////////////////////////////////////////////////////////////
 
 class TUQuadro {
     private:

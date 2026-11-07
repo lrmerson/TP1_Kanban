@@ -47,8 +47,6 @@ int TUEMAIL::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const vector<string> TUEstado::VALORES_VALIDOS = {"A FAZER", "FAZENDO", "FEITO"};
 const vector<string> TUEstado::VALORES_INVALIDOS = {"", "A_FAZER", "feito", "PRONTO"};
 
@@ -95,8 +93,6 @@ int TUEstado::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const vector<string> TUIdentificador::VALORES_VALIDOS = {"abc123", "XYZ999", "aBc000"};
 const vector<string> TUIdentificador::VALORES_INVALIDOS = {"", "ab1234", "abc12", "abc1234", "1bc123", "abcd23"};
@@ -145,8 +141,6 @@ int TUIdentificador::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const vector<int> TULimite::VALORES_VALIDOS = {1, 10, 25};
 const vector<int> TULimite::VALORES_INVALIDOS = {-1, 0, 26, 100};
 
@@ -193,8 +187,6 @@ int TULimite::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const vector<string> TUNome::VALORES_VALIDOS = {"Joao", "Ana Maria", "A", "Joao da Silva X"};
 const vector<string> TUNome::VALORES_INVALIDOS = {"", " Joao", "Joao ", "Ana  Maria", "Joao1", "Nome muito grande"};
@@ -243,8 +235,6 @@ int TUNome::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const vector<string> TUPapel::VALORES_VALIDOS = {"GESTOR", "DESENVOLVEDOR"};
 const vector<string> TUPapel::VALORES_INVALIDOS = {"", "gestor", "ADMIN"};
 
@@ -291,8 +281,6 @@ int TUPapel::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const vector<string> TUPrioridade::VALORES_VALIDOS = {"ALTA", "MEDIA", "BAIXA"};
 const vector<string> TUPrioridade::VALORES_INVALIDOS = {"", "alta", "MÉDIA", "URGENTE"};
@@ -341,8 +329,6 @@ int TUPrioridade::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const vector<string> TUSenha::VALORES_VALIDOS = {"abc12", "1a2b3", "A1111"};
 const vector<string> TUSenha::VALORES_INVALIDOS = {"", "abcde", "12345", "abc1", "abc123", "ab#12"};
 
@@ -389,8 +375,6 @@ int TUSenha::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const vector<string> TUTamanho::VALORES_VALIDOS = {"GRANDE", "MEDIO", "PEQUENO"};
 const vector<string> TUTamanho::VALORES_INVALIDOS = {"", "grande", "ENORME"};
@@ -439,8 +423,6 @@ int TUTamanho::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const vector<string> TUTexto::VALORES_VALIDOS = {"Projeto Kanban.", "Teste, com pontuacao.", "A."};
 const vector<string> TUTexto::VALORES_INVALIDOS = {"", "projeto.", "Projeto", "Projeto!.", "Texto com mais de trinta caract.", "Projeto @ unb."};
 
@@ -487,8 +469,6 @@ int TUTexto::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const vector<string> TUTimestamp::VALORES_VALIDOS = {"01-JAN-2000-00:00", "29-FEV-2024-12:30", "31-DEZ-2099-23:59"};
 const vector<string> TUTimestamp::VALORES_INVALIDOS = {"", "29-FEV-2023-10:00", "31-ABR-2025-10:00", "32-JAN-2025-10:00", "10-JAN-1999-10:00", "10-ABC-2025-10:00", "10-JAN-2025-24:00", "10-JAN-2025-10:60", "10-JAN-2025", "0-JAN-2025-10:00"};

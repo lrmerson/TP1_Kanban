@@ -1,7 +1,5 @@
 #include "entidades/entidades.hpp"
 
-//metodos da entidade Pessoa
-
 void Pessoa::setEmail(const EMAIL& email) {
     this->email = email;
 }
@@ -29,9 +27,6 @@ void Pessoa::setPapel(const Papel& papel) {
 Papel Pessoa::getPapel() const {
     return papel;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-//metodos da entidade Projeto
 
 void Projeto::setIdentificador(const Identificador& identificador) {
     this->identificador = identificador;
@@ -68,9 +63,6 @@ Timestamp Projeto::getTermino() const {
     return termino;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-//metodos da entidade CartaoAtividade
 
 void CartaoAtividade::setIdentificador(const Identificador& identificador) {
     this->identificador = identificador;
@@ -137,9 +129,6 @@ Timestamp CartaoAtividade::getTermino() const {
 
 
 
-///////////////////////////////////////////////////////////////////////////////
-//metodos da entidade Quadro
-
 void Quadro::setIdentificador(const Identificador& identificador) {
     this->identificador = identificador;
 }
@@ -160,4 +149,3 @@ void Quadro::setLimite(const Limite& limite) {
 Limite Quadro::getLimite() const {
     return limite;
 }
-

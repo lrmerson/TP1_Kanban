@@ -47,8 +47,6 @@ int TUPessoa::run() {
     return estado;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 const string TUProjeto::IDENTIFICADOR_VALIDO = "PRJ001";
 const string TUProjeto::NOME_VALIDO = "Kanban";
 const string TUProjeto::DESCRICAO_VALIDA = "Projeto da disciplina.";
@@ -102,8 +100,6 @@ int TUProjeto::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const string TUCartaoAtividade::IDENTIFICADOR_VALIDO = "CRT001";
 const string TUCartaoAtividade::NOME_VALIDO = "Criar telas";
@@ -186,8 +182,6 @@ int TUCartaoAtividade::run() {
     tearDown();
     return estado;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 const string TUQuadro::IDENTIFICADOR_VALIDO = "QDR001";
 const string TUQuadro::NOME_VALIDO = "Sprint Um";

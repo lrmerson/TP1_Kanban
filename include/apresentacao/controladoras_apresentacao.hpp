@@ -9,9 +9,18 @@
 
 using namespace std;
 
-string lerLinha(string);
-int lerNumero(string);
+/** @brief Lê uma linha de texto exibindo o rótulo informado.
+ *  @param rotulo Prompt apresentado antes da leitura.
+ *  @return Linha digitada pelo usuário.
+ */
+string lerLinha(string rotulo);
+/** @brief Lê um número inteiro não negativo a partir de uma linha.
+ *  @param rotulo Prompt apresentado antes da leitura.
+ *  @return Número digitado ou -1 se a entrada não for numérica.
+ */
+int lerNumero(string rotulo);
 
+/** @brief Controla autenticação, navegação principal e injeção dos módulos. */
 class CntrApresentacaoControle {
     private:
         IApresentacaoPessoa *cntrApresentacaoPessoa;
@@ -21,15 +30,27 @@ class CntrApresentacaoControle {
         void menuServicos(const EMAIL&);
 
     public:
+        /** @brief Executa o fluxo principal da aplicação. */
         void executar();
-        void setCntrApresentacaoPessoa(IApresentacaoPessoa*);
-        void setCntrApresentacaoProjeto(IApresentacaoProjeto*);
-        void setCntrApresentacaoQuadro(IApresentacaoQuadro*);
-        void setCntrApresentacaoCartao(IApresentacaoCartao*);
+        /** @brief Define o módulo de apresentação de pessoas.
+         *  @param cntr Controladora de apresentação injetada.
+         */
+        void setCntrApresentacaoPessoa(IApresentacaoPessoa* cntr);
+        /** @brief Define o módulo de apresentação de projetos.
+         *  @param cntr Controladora de apresentação injetada.
+         */
+        void setCntrApresentacaoProjeto(IApresentacaoProjeto* cntr);
+        /** @brief Define o módulo de apresentação de quadros.
+         *  @param cntr Controladora de apresentação injetada.
+         */
+        void setCntrApresentacaoQuadro(IApresentacaoQuadro* cntr);
+        /** @brief Define o módulo de apresentação de cartões.
+         *  @param cntr Controladora de apresentação injetada.
+         */
+        void setCntrApresentacaoCartao(IApresentacaoCartao* cntr);
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
+/** @brief Controla a interface com o usuário para serviços de pessoas. */
 class CntrApresentacaoPessoa : public IApresentacaoPessoa {
     private:
         IServicoPessoa *cntrServicoPessoa;
@@ -39,14 +60,17 @@ class CntrApresentacaoPessoa : public IApresentacaoPessoa {
         void listar();
 
     public:
-        bool autenticar(EMAIL*);
-        void cadastrar();
-        bool executar(const EMAIL&);
-        void setCntrServicoPessoa(IServicoPessoa*);
+        /** @copydoc IApresentacaoPessoa::autenticar */
+        bool autenticar(EMAIL* email) override;
+        /** @copydoc IApresentacaoPessoa::cadastrar */
+        void cadastrar() override;
+        /** @copydoc IApresentacaoPessoa::executar */
+        bool executar(const EMAIL& email) override;
+        /** @copydoc IApresentacaoPessoa::setCntrServicoPessoa */
+        void setCntrServicoPessoa(IServicoPessoa* servico) override;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
+/** @brief Controla a interface com o usuário para serviços de projetos. */
 class CntrApresentacaoProjeto : public IApresentacaoProjeto {
     private:
         IServicoProjeto *cntrServicoProjeto;
@@ -57,12 +81,13 @@ class CntrApresentacaoProjeto : public IApresentacaoProjeto {
         void listar();
 
     public:
-        void executar(const EMAIL&);
-        void setCntrServicoProjeto(IServicoProjeto*);
+        /** @copydoc IApresentacaoProjeto::executar */
+        void executar(const EMAIL& email) override;
+        /** @copydoc IApresentacaoProjeto::setCntrServicoProjeto */
+        void setCntrServicoProjeto(IServicoProjeto* servico) override;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
+/** @brief Controla a interface com o usuário para serviços de quadros. */
 class CntrApresentacaoQuadro : public IApresentacaoQuadro {
     private:
         IServicoQuadro *cntrServicoQuadro;
@@ -73,12 +98,13 @@ class CntrApresentacaoQuadro : public IApresentacaoQuadro {
         void listar();
 
     public:
-        void executar(const EMAIL&);
-        void setCntrServicoQuadro(IServicoQuadro*);
+        /** @copydoc IApresentacaoQuadro::executar */
+        void executar(const EMAIL& email) override;
+        /** @copydoc IApresentacaoQuadro::setCntrServicoQuadro */
+        void setCntrServicoQuadro(IServicoQuadro* servico) override;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
+/** @brief Controla a interface com o usuário para serviços de cartões e métricas. */
 class CntrApresentacaoCartao : public IApresentacaoCartao {
     private:
         IServicoCartao *cntrServicoCartao;
@@ -95,8 +121,10 @@ class CntrApresentacaoCartao : public IApresentacaoCartao {
         void lerWIP();
 
     public:
-        void executar(const EMAIL&);
-        void setCntrServicoCartao(IServicoCartao*);
+        /** @copydoc IApresentacaoCartao::executar */
+        void executar(const EMAIL& email) override;
+        /** @copydoc IApresentacaoCartao::setCntrServicoCartao */
+        void setCntrServicoCartao(IServicoCartao* servico) override;
 };
 
 #endif // CONTROLADORAS_APRESENTACAO_HPP_INCLUDED

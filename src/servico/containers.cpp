@@ -52,8 +52,6 @@ vector<Pessoa> ContainerPessoa::listar() {
     return lista;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 ContainerProjeto *ContainerProjeto::instancia = nullptr;
 
 ContainerProjeto* ContainerProjeto::getInstancia() {
@@ -114,8 +112,6 @@ vector<Projeto> ContainerProjeto::listar() {
     }
     return lista;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 ContainerQuadro *ContainerQuadro::instancia = nullptr;
 
@@ -179,8 +175,6 @@ vector<Quadro> ContainerQuadro::listar(const string& projeto) {
     }
     return lista;
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 ContainerCartao *ContainerCartao::instancia = nullptr;
 

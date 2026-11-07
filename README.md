@@ -68,13 +68,13 @@ todos passarem.
 
 ## Documentação com Doxygen
 
-O arquivo [Doxyfile](Doxyfile) configura a geração da documentação a partir
-dos comentários das classes e métodos. Instale o Doxygen e execute na raiz do
-projeto:
+O arquivo [Doxyfile](Doxyfile) configura a geração da documentação das classes
+e membros públicos documentados nos cabeçalhos. Instale o Doxygen e execute na
+raiz do projeto:
 
 ```sh
 doxygen Doxyfile
 ```
 
-Os arquivos HTML serão gerados em `build/doxygen/html/`; abra
-`build/doxygen/html/index.html` no navegador.
+Os arquivos HTML serão gerados em `build/html/`; o Doxygen cria as pastas de
+saída quando necessário. Abra `build/html/index.html` no navegador.
