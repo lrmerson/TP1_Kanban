@@ -1,17 +1,5 @@
 #include "servico/pessoas/cntr_servico_pes.hpp"
 
-bool CntrServicoPessoa::autenticar(const EMAIL& email, const Senha& senha) {
-    Pessoa pessoa;
-    pessoa.setEmail(email);
-    if (!ContainerPessoa::getInstancia()->pesquisar(&pessoa)) {
-        return false;
-    }
-    if (pessoa.getSenha().getValor() != senha.getValor()) {
-        return false;
-    }
-    return true;
-}
-
 void CntrServicoPessoa::criar(const Pessoa& pessoa) {
     if (!ContainerPessoa::getInstancia()->incluir(pessoa)) {
         throw runtime_error("Ja existe pessoa com este email.");
