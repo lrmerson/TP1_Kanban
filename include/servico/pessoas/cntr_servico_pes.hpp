@@ -2,9 +2,13 @@
 #define CNTR_SERVICO_PES_HPP_INCLUDED
 
 #include <stdexcept>
+#include <vector>
 
 #include "interfaces/servico/interfaces_servico.hpp"
+
 #include "servico/pessoas/container_pes.hpp"
+#include "servico/projetos/container_pro.hpp"
+#include "servico/kanban/container_car.hpp"
 
 using namespace std;
 
