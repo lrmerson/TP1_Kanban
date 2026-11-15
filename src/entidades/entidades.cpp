@@ -63,6 +63,13 @@ Timestamp Projeto::getTermino() const {
     return termino;
 }
 
+void Projeto::setGestor(const EMAIL& gestor) {
+    this->gestor = gestor;
+}
+EMAIL Projeto::getGestor() const {
+    return gestor;
+}
+
 
 void CartaoAtividade::setIdentificador(const Identificador& identificador) {
     this->identificador = identificador;
@@ -127,6 +134,20 @@ Timestamp CartaoAtividade::getTermino() const {
     return termino;
 }
 
+void CartaoAtividade::setDesenvolvedor(const EMAIL& desenvolvedor) {
+    this->desenvolvedor = desenvolvedor;
+}
+EMAIL CartaoAtividade::getDesenvolvedor() const {
+    return desenvolvedor;
+}
+
+void CartaoAtividade::setQuadro(const Identificador& quadro) {
+    this->quadro = quadro;
+}
+Identificador CartaoAtividade::getQuadro() const {
+    return quadro;
+}
+
 
 
 void Quadro::setIdentificador(const Identificador& identificador) {
@@ -148,4 +169,11 @@ void Quadro::setLimite(const Limite& limite) {
 }
 Limite Quadro::getLimite() const {
     return limite;
+}
+
+void Quadro::setProjeto(const Identificador& projeto) {
+    this->projeto = projeto;
+}
+Identificador Quadro::getProjeto() const {
+    return projeto;
 }
