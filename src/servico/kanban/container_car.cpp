@@ -86,6 +86,20 @@ bool ContainerCartao::atualizar(
     return false;
 }
 
+vector<CartaoAtividade> ContainerCartao::listar() {
+
+    vector<CartaoAtividade> cartoes;
+
+    for (list<CartaoAtividade>::iterator elemento = container.begin();
+         elemento != container.end();
+         elemento++) {
+
+        cartoes.push_back(*elemento);
+    }
+
+    return cartoes;
+}
+
 vector<CartaoAtividade> ContainerCartao::listar(
     const Identificador& quadro
 ) {
