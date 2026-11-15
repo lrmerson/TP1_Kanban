@@ -1,47 +1,30 @@
 #include "servico/kanban/cntr_servico_car.hpp"
 
 
-void CntrServicoCartao::verificarGestor(
-    const Identificador& quadro,
-    const EMAIL& gestor
-) {
-
+void CntrServicoCartao::verificarGestor(const Identificador& quadro, const EMAIL& gestor) {
     Quadro quadroEncontrado;
 
     quadroEncontrado.setIdentificador(quadro);
 
-    if (!ContainerQuadro::getInstancia()->pesquisar(
-            &quadroEncontrado)) {
-
+    if (!ContainerQuadro::getInstancia()->pesquisar(&quadroEncontrado)) {
         throw runtime_error("Quadro nao encontrado.");
     }
 
     Projeto projeto;
 
-    projeto.setIdentificador(
-        quadroEncontrado.getProjeto()
-    );
+    projeto.setIdentificador(quadroEncontrado.getProjeto());
 
-    if (!ContainerProjeto::getInstancia()->pesquisar(
-            &projeto)) {
-
+    if (!ContainerProjeto::getInstancia()->pesquisar(&projeto)) {
         throw runtime_error("Projeto nao encontrado.");
     }
 
-    if (projeto.getGestor().getValor() !=
-        gestor.getValor()) {
-
-        throw runtime_error(
-            "Apenas o gestor do projeto pode realizar esta operacao."
-        );
+    if (projeto.getGestor().getValor() != gestor.getValor()) {
+        throw runtime_error("Apenas o gestor do projeto pode realizar esta operacao.");
     }
 }
 
 
-int CntrServicoCartao::converterMinutos(
-    const Timestamp& timestamp
-) {
-
+int CntrServicoCartao::converterMinutos(const Timestamp& timestamp) {
     string valor = timestamp.getValor();
 
     string partes[4];
@@ -95,37 +78,25 @@ int CntrServicoCartao::converterMinutos(
         }
     }
 
-    for (int i = 0;
-         i < 12 && meses[i] != partes[1];
-         i++) {
-
+    for (int i = 0; i < 12 && meses[i] != partes[1]; i++) {
         dias += diasMes[i];
     }
 
     dias += dia - 1;
 
-    return dias * 24 * 60 +
-           horas * 60 +
-           minutos;
+    return dias * 24 * 60 + horas * 60 + minutos;
 }
 
 
-int CntrServicoCartao::contarFazendo(
-    const Identificador& quadro
-) {
-
+int CntrServicoCartao::contarFazendo(const Identificador& quadro) {
     int total = 0;
 
     vector<CartaoAtividade> cartoes =
-        ContainerCartao::getInstancia()->listar(
-            quadro
-        );
+        ContainerCartao::getInstancia()->listar(quadro);
 
     for (int i = 0; i < cartoes.size(); i++) {
 
-        if (cartoes[i].getEstado().getValor() ==
-            "FAZENDO") {
-
+        if (cartoes[i].getEstado().getValor() == "FAZENDO") {
             total++;
         }
     }
@@ -134,26 +105,16 @@ int CntrServicoCartao::contarFazendo(
 }
 
 
-void CntrServicoCartao::criar(
-    const CartaoAtividade& cartao,
-    const Identificador& quadro,
-    const EMAIL& gestor
-) {
-
+void CntrServicoCartao::criar(const CartaoAtividade& cartao, const Identificador& quadro, const EMAIL& gestor) {
     Quadro quadroEncontrado;
 
     quadroEncontrado.setIdentificador(quadro);
 
-    if (!ContainerQuadro::getInstancia()->pesquisar(
-            &quadroEncontrado)) {
-
+    if (!ContainerQuadro::getInstancia()->pesquisar(&quadroEncontrado)) {
         throw runtime_error("Quadro nao encontrado.");
     }
 
-    verificarGestor(
-        quadro,
-        gestor
-    );
+    verificarGestor(quadro, gestor);
 
     CartaoAtividade novo = cartao;
 
@@ -169,14 +130,14 @@ void CntrServicoCartao::criar(
         novo.getDesenvolvedor()
     );
 
-    if (!ContainerPessoa::getInstancia()->pesquisar(
-            &desenvolvedor)) {
-
-        throw runtime_error(
-            "Desenvolvedor nao encontrado."
-        );
+    if (!ContainerPessoa::getInstancia()->pesquisar(&desenvolvedor)) {
+        throw runtime_error("Desenvolvedor nao encontrado.");
     }
 
+    if (desenvolvedor.getPapel().getValor() != "DESENVOLVEDOR") {
+        throw runtime_error("Pessoa informada nao possui papel de DESENVOLVEDOR.");
+    }
+    
     Estado estado;
 
     estado.setValor("A FAZER");
@@ -192,225 +153,124 @@ void CntrServicoCartao::criar(
     novo.setInicio(Timestamp());
     novo.setTermino(Timestamp());
 
-    if (!ContainerCartao::getInstancia()->incluir(
-            novo)) {
-
-        throw runtime_error(
-            "Ja existe cartao com este identificador."
-        );
+    if (!ContainerCartao::getInstancia()->incluir(novo)) {
+        throw runtime_error("Ja existe cartao com este identificador.");
     }
 }
 
 
-CartaoAtividade CntrServicoCartao::ler(
-    const Identificador& identificador
-) {
-
+CartaoAtividade CntrServicoCartao::ler(const Identificador& identificador) {
     CartaoAtividade cartao;
 
-    cartao.setIdentificador(
-        identificador
-    );
+    cartao.setIdentificador(identificador);
 
-    if (!ContainerCartao::getInstancia()->pesquisar(
-            &cartao)) {
-
-        throw runtime_error(
-            "Cartao nao encontrado."
-        );
+    if (!ContainerCartao::getInstancia()->pesquisar(&cartao)) {
+        throw runtime_error("Cartao nao encontrado.");
     }
-
     return cartao;
 }
 
 
-void CntrServicoCartao::atualizar(
-    const CartaoAtividade& cartao,
-    const EMAIL& gestor
-) {
+void CntrServicoCartao::atualizar(const CartaoAtividade& cartao, const EMAIL& gestor) {
+    CartaoAtividade atual = ler(cartao.getIdentificador());
 
-    CartaoAtividade atual =
-        ler(cartao.getIdentificador());
-
-    verificarGestor(
-        atual.getQuadro(),
-        gestor
-    );
+    verificarGestor(atual.getQuadro(), gestor);
 
     /*
      * Apenas os campos editáveis são alterados.
      *
      * PK, FKs, estado e timestamps são preservados.
      */
-    atual.setNome(
-        cartao.getNome()
-    );
+    atual.setNome(cartao.getNome());
 
-    atual.setDescricao(
-        cartao.getDescricao()
-    );
+    atual.setDescricao(cartao.getDescricao());
 
-    atual.setPrioridade(
-        cartao.getPrioridade()
-    );
+    atual.setPrioridade(cartao.getPrioridade());
 
-    atual.setTamanho(
-        cartao.getTamanho()
-    );
+    atual.setTamanho(cartao.getTamanho());
 
-    ContainerCartao::getInstancia()->atualizar(
-        atual
-    );
+    ContainerCartao::getInstancia()->atualizar(atual);
 }
 
 
-void CntrServicoCartao::excluir(
-    const Identificador& identificador,
-    const EMAIL& gestor
-) {
+void CntrServicoCartao::excluir(const Identificador& identificador, const EMAIL& gestor) {
 
-    CartaoAtividade cartao =
-        ler(identificador);
+    CartaoAtividade cartao = ler(identificador);
 
-    verificarGestor(
-        cartao.getQuadro(),
-        gestor
-    );
+    verificarGestor(cartao.getQuadro(),gestor);
 
-    if (!ContainerCartao::getInstancia()->remover(
-            identificador)) {
-
-        throw runtime_error(
-            "Cartao nao encontrado."
-        );
+    if (!ContainerCartao::getInstancia()->remover(identificador)) {
+        throw runtime_error("Cartao nao encontrado.");
     }
 }
 
 
-vector<Identificador> CntrServicoCartao::listar(
-    const Identificador& quadro
-) {
-
+vector<Identificador> CntrServicoCartao::listar(const Identificador& quadro) {
     Quadro quadroEncontrado;
 
-    quadroEncontrado.setIdentificador(
-        quadro
-    );
+    quadroEncontrado.setIdentificador(quadro);
 
-    if (!ContainerQuadro::getInstancia()->pesquisar(
-            &quadroEncontrado)) {
-
-        throw runtime_error(
-            "Quadro nao encontrado."
-        );
+    if (!ContainerQuadro::getInstancia()->pesquisar(&quadroEncontrado)) {
+        throw runtime_error("Quadro nao encontrado.");
     }
 
     vector<Identificador> identificadores;
 
-    vector<CartaoAtividade> cartoes =
-        ContainerCartao::getInstancia()->listar(
-            quadro
-        );
+    vector<CartaoAtividade> cartoes =ContainerCartao::getInstancia()->listar(quadro);
 
     for (int i = 0; i < cartoes.size(); i++) {
-
-        identificadores.push_back(
-            cartoes[i].getIdentificador()
-        );
+        identificadores.push_back(cartoes[i].getIdentificador());
     }
 
     return identificadores;
 }
 
 
-void CntrServicoCartao::mover(
-    const Identificador& identificador,
-    const Timestamp& momento
-) {
+void CntrServicoCartao::mover(const Identificador& identificador, const Timestamp& momento) {
 
-    CartaoAtividade cartao =
-        ler(identificador);
+    CartaoAtividade cartao = ler(identificador);
 
-    string estado =
-        cartao.getEstado().getValor();
+    string estado = cartao.getEstado().getValor();
 
     Estado novoEstado;
 
     if (estado == "A FAZER") {
-
         Quadro quadro;
 
-        quadro.setIdentificador(
-            cartao.getQuadro()
-        );
+        quadro.setIdentificador(cartao.getQuadro());
 
-        if (!ContainerQuadro::getInstancia()->pesquisar(
-                &quadro)) {
-
-            throw runtime_error(
-                "Quadro nao encontrado."
-            );
+        if (!ContainerQuadro::getInstancia()->pesquisar(&quadro)) {
+            throw runtime_error("Quadro nao encontrado.");
         }
 
-        if (contarFazendo(
-                cartao.getQuadro()) >=
-            quadro.getLimite().getValor()) {
-
-            throw runtime_error(
-                "Limite WIP do quadro atingido."
-            );
+        if (contarFazendo(cartao.getQuadro()) >=quadro.getLimite().getValor()) {
+            throw runtime_error("Limite WIP do quadro atingido.");
         }
 
-        if (converterMinutos(momento) <
-            converterMinutos(
-                cartao.getEntrada())) {
-
-            throw runtime_error(
-                "Momento anterior a entrada do cartao."
-            );
+        if (converterMinutos(momento) < converterMinutos(cartao.getEntrada())) {
+            throw runtime_error("Momento anterior a entrada do cartao.");
         }
 
-        novoEstado.setValor(
-            "FAZENDO"
-        );
+        novoEstado.setValor("FAZENDO");
 
-        cartao.setInicio(
-            momento
-        );
+        cartao.setInicio(momento);
     }
 
     else if (estado == "FAZENDO") {
-
-        if (converterMinutos(momento) <
-            converterMinutos(
-                cartao.getInicio())) {
-
-            throw runtime_error(
-                "Momento anterior ao inicio do cartao."
-            );
+        if (converterMinutos(momento) < converterMinutos(cartao.getInicio())) {
+            throw runtime_error("Momento anterior ao inicio do cartao.");
         }
 
-        novoEstado.setValor(
-            "FEITO"
-        );
+        novoEstado.setValor("FEITO");
 
-        cartao.setTermino(
-            momento
-        );
+        cartao.setTermino(momento);
     }
 
     else {
-
-        throw runtime_error(
-            "Cartao ja esta na coluna FEITO."
-        );
+        throw runtime_error("Cartao ja esta na coluna FEITO.");
     }
 
-    cartao.setEstado(
-        novoEstado
-    );
+    cartao.setEstado(novoEstado);
 
-    ContainerCartao::getInstancia()->atualizar(
-        cartao
-    );
+    ContainerCartao::getInstancia()->atualizar(cartao);
 }
