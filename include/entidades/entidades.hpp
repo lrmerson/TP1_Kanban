@@ -57,6 +57,8 @@ class Projeto {
         Texto descricao;
         Timestamp inicio;
         Timestamp termino;
+        
+        EMAIL gestor;
 
     public:
         /** @brief Define o identificador imutável do projeto.
@@ -103,6 +105,16 @@ class Projeto {
          *  @return Data e horário de término.
          */
         Timestamp getTermino() const;
+
+        /** @brief Define o gestor responsável pelo projeto.
+         *  @param gestor E-mail do gestor.
+         */
+        void setGestor(const EMAIL& gestor);
+
+        /** @brief Retorna o gestor responsável pelo projeto.
+         *  @return E-mail do gestor.
+         */
+        EMAIL getGestor() const;
 };
 
 /** @brief Dados, estado e tempos registrados de uma atividade Kanban. */
@@ -117,6 +129,9 @@ class CartaoAtividade {
         Timestamp entrada;
         Timestamp inicio;
         Timestamp termino;
+        
+        EMAIL desenvolvedor;
+        Identificador quadro;
 
     public:
         /** @brief Define o identificador imutável do cartão.
@@ -199,6 +214,26 @@ class CartaoAtividade {
          *  @return Data e horário de conclusão.
          */
         Timestamp getTermino() const;
+
+         /** @brief Define o desenvolvedor responsável pelo cartão.
+         *  @param desenvolvedor E-mail do desenvolvedor.
+         */
+        void setDesenvolvedor(const EMAIL& desenvolvedor);
+
+        /** @brief Retorna o desenvolvedor responsável pelo cartão.
+         *  @return E-mail do desenvolvedor.
+         */
+        EMAIL getDesenvolvedor() const;
+
+        /** @brief Define o quadro ao qual o cartão pertence.
+         *  @param quadro Identificador do quadro.
+         */
+        void setQuadro(const Identificador& quadro);
+
+        /** @brief Retorna o quadro ao qual o cartão pertence.
+         *  @return Identificador do quadro.
+         */
+        Identificador getQuadro() const;
 };
 
 /** @brief Quadro Kanban de um projeto e seu limite WIP. */
@@ -207,6 +242,8 @@ class Quadro {
         Identificador identificador;
         Nome nome;
         Limite limite;
+        
+        Identificador projeto;
 
     public:
         /** @brief Define o identificador imutável do quadro.
@@ -235,6 +272,16 @@ class Quadro {
          *  @return Quantidade máxima de cartões em andamento.
          */
         Limite getLimite() const;
+
+         /** @brief Define o projeto ao qual o quadro pertence.
+         *  @param projeto Identificador do projeto.
+         */
+        void setProjeto(const Identificador& projeto);
+
+        /** @brief Retorna o projeto ao qual o quadro pertence.
+         *  @return Identificador do projeto.
+         */
+        Identificador getProjeto() const;
 };
 
 
