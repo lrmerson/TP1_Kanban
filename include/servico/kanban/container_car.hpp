@@ -55,6 +55,12 @@ class ContainerCartao {
         bool atualizar(const CartaoAtividade& cartao);
 
         /**
+         * @brief Lista todos os cartões do sistema.
+         * @return Cartões pertencentes a qualquer quadro.
+         */
+        vector<CartaoAtividade> listar();
+
+        /**
          * @brief Lista os cartões pertencentes a um quadro.
          * @param quadro Identificador do quadro.
          * @return Cartões associados ao quadro informado.
