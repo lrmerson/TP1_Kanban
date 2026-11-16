@@ -24,35 +24,21 @@ class CntrServicoProjeto : public IServicoProjeto {
          * @param identificador Identificador do projeto.
          * @param gestor E-mail da pessoa que solicita a operação.
          */
-        void verificarGestor(
-            const Identificador& identificador,
-            const EMAIL& gestor
-        );
+        void verificarGestor(const Identificador& identificador,const EMAIL& gestor);
 
     public:
 
         /** @copydoc IServicoProjeto::criar */
-        void criar(
-            const Projeto& projeto,
-            const EMAIL& gestor
-        ) override;
+        void criar(const Projeto& projeto,const EMAIL& gestor) override;
 
         /** @copydoc IServicoProjeto::ler */
-        Projeto ler(
-            const Identificador& identificador
-        ) override;
+        Projeto ler(const Identificador& identificador) override;
 
         /** @copydoc IServicoProjeto::atualizar */
-        void atualizar(
-            const Projeto& projeto,
-            const EMAIL& gestor
-        ) override;
+        void atualizar(const Projeto& projeto,const EMAIL& gestor) override;
 
         /** @copydoc IServicoProjeto::excluir */
-        void excluir(
-            const Identificador& identificador,
-            const EMAIL& gestor
-        ) override;
+        void excluir(const Identificador& identificador,const EMAIL& gestor) override;
 
         /** @copydoc IServicoProjeto::listar */
         vector<Identificador> listar() override;
