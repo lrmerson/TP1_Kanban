@@ -28,6 +28,9 @@ class IApresentacaoAutenticacao {
          */
         virtual void setCntrServicoAutenticacao(IServicoAutenticacao* servico) = 0;
 
+        /**
+         * @brief Destrutor virtual da interface.
+         */
         virtual ~IApresentacaoAutenticacao() {}
 };
 
@@ -56,6 +59,9 @@ class IApresentacaoPessoa {
          */
         virtual void setCntrServicoPessoa(IServicoPessoa* servico) = 0;
 
+        /**
+         * @brief Destrutor virtual da interface.
+         */
         virtual ~IApresentacaoPessoa() {}
 };
 
@@ -76,6 +82,9 @@ class IApresentacaoProjeto {
          */
         virtual void setCntrServicoProjeto(IServicoProjeto* servico) = 0;
 
+        /**
+         * @brief Destrutor virtual da interface.
+         */
         virtual ~IApresentacaoProjeto() {}
 };
 
@@ -96,6 +105,9 @@ class IApresentacaoKanban {
          */
         virtual void setCntrServicoKanban(IServicoKanban* servico) = 0;
 
+        /**
+         * @brief Destrutor virtual da interface.
+         */
         virtual ~IApresentacaoKanban() {}
 };
 
