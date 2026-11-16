@@ -1,9 +1,6 @@
 #include "servico/autenticacao/cntr_servico_aut.hpp"
 
-bool CntrServicoAutenticacao::autenticar(
-    const EMAIL& email,
-    const Senha& senha
-) {
+bool CntrServicoAutenticacao::autenticar(const EMAIL& email, const Senha& senha) {
     Pessoa pessoa;
 
     pessoa.setEmail(email);
