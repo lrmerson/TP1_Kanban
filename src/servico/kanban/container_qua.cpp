@@ -11,14 +11,9 @@ ContainerQuadro* ContainerQuadro::getInstancia() {
 }
 
 bool ContainerQuadro::incluir(const Quadro& quadro) {
+    for (list<Quadro>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<Quadro>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            quadro.getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == quadro.getIdentificador().getValor()) {
             return false;
         }
     }
@@ -29,16 +24,10 @@ bool ContainerQuadro::incluir(const Quadro& quadro) {
 }
 
 bool ContainerQuadro::remover(const Identificador& identificador) {
+    for (list<Quadro>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<Quadro>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            identificador.getValor()) {
-
+        if (elemento->getIdentificador().getValor() == identificador.getValor()) {
             container.erase(elemento);
-
             return true;
         }
     }
@@ -47,16 +36,10 @@ bool ContainerQuadro::remover(const Identificador& identificador) {
 }
 
 bool ContainerQuadro::pesquisar(Quadro* quadro) {
+    for (list<Quadro>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<Quadro>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            quadro->getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == quadro->getIdentificador().getValor()) {
             *quadro = *elemento;
-
             return true;
         }
     }
@@ -65,16 +48,10 @@ bool ContainerQuadro::pesquisar(Quadro* quadro) {
 }
 
 bool ContainerQuadro::atualizar(const Quadro& quadro) {
+    for (list<Quadro>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<Quadro>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            quadro.getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == quadro.getIdentificador().getValor()) {
             *elemento = quadro;
-
             return true;
         }
     }
@@ -82,19 +59,12 @@ bool ContainerQuadro::atualizar(const Quadro& quadro) {
     return false;
 }
 
-vector<Quadro> ContainerQuadro::listar(
-    const Identificador& projeto
-) {
-
+vector<Quadro> ContainerQuadro::listar(const Identificador& projeto) {
     vector<Quadro> quadros;
 
-    for (list<Quadro>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Quadro>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-        if (elemento->getProjeto().getValor() ==
-            projeto.getValor()) {
-
+        if (elemento->getProjeto().getValor() == projeto.getValor()) {
             quadros.push_back(*elemento);
         }
     }
