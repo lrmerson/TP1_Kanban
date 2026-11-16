@@ -55,7 +55,7 @@ bool lerCampo(const string& rotulo, const string& dica, T& campo) {
         }
         catch (invalid_argument& excecao) {
           
-            aviso(tring(excecao.what()) +" Formato: " +dica + ".");
+            aviso(string(excecao.what()) +" Formato: " +dica + ".");
 
             aviso("Tente novamente, digite 0 ou pressione Enter para voltar.");
         }
