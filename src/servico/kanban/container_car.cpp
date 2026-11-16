@@ -11,14 +11,9 @@ ContainerCartao* ContainerCartao::getInstancia() {
 }
 
 bool ContainerCartao::incluir(const CartaoAtividade& cartao) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            cartao.getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == cartao.getIdentificador().getValor()) {
             return false;
         }
     }
@@ -28,19 +23,11 @@ bool ContainerCartao::incluir(const CartaoAtividade& cartao) {
     return true;
 }
 
-bool ContainerCartao::remover(
-    const Identificador& identificador
-) {
+bool ContainerCartao::remover(const Identificador& identificador) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            identificador.getValor()) {
-
+        if (elemento->getIdentificador().getValor() == identificador.getValor()) {
             container.erase(elemento);
-
             return true;
         }
     }
@@ -49,16 +36,10 @@ bool ContainerCartao::remover(
 }
 
 bool ContainerCartao::pesquisar(CartaoAtividade* cartao) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            cartao->getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == cartao->getIdentificador().getValor()) {
             *cartao = *elemento;
-
             return true;
         }
     }
@@ -66,19 +47,11 @@ bool ContainerCartao::pesquisar(CartaoAtividade* cartao) {
     return false;
 }
 
-bool ContainerCartao::atualizar(
-    const CartaoAtividade& cartao
-) {
+bool ContainerCartao::atualizar(const CartaoAtividade& cartao) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
-
-        if (elemento->getIdentificador().getValor() ==
-            cartao.getIdentificador().getValor()) {
-
+        if (elemento->getIdentificador().getValor() == cartao.getIdentificador().getValor()) {
             *elemento = cartao;
-
             return true;
         }
     }
@@ -87,12 +60,9 @@ bool ContainerCartao::atualizar(
 }
 
 vector<CartaoAtividade> ContainerCartao::listar() {
-
     vector<CartaoAtividade> cartoes;
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         cartoes.push_back(*elemento);
     }
@@ -100,19 +70,12 @@ vector<CartaoAtividade> ContainerCartao::listar() {
     return cartoes;
 }
 
-vector<CartaoAtividade> ContainerCartao::listar(
-    const Identificador& quadro
-) {
-
+vector<CartaoAtividade> ContainerCartao::listar(const Identificador& quadro) {
     vector<CartaoAtividade> cartoes;
 
-    for (list<CartaoAtividade>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<CartaoAtividade>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
-        if (elemento->getQuadro().getValor() ==
-            quadro.getValor()) {
-
+        if (elemento->getQuadro().getValor() == quadro.getValor()) {
             cartoes.push_back(*elemento);
         }
     }
