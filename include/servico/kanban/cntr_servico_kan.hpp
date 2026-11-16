@@ -23,95 +23,54 @@ class CntrServicoKanban : public IServicoKanban {
     public:
 
         /** @copydoc IServicoKanban::criarQuadro */
-        void criarQuadro(
-            const Quadro& quadro,
-            const Identificador& projeto,
-            const EMAIL& gestor
-        ) override;
+        void criarQuadro(const Quadro& quadro,const Identificador& projeto,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::lerQuadro */
-        Quadro lerQuadro(
-            const Identificador& identificador
-        ) override;
+        Quadro lerQuadro(const Identificador& identificador) override;
 
         /** @copydoc IServicoKanban::atualizarQuadro */
-        void atualizarQuadro(
-            const Quadro& quadro,
-            const EMAIL& gestor
-        ) override;
+        void atualizarQuadro(const Quadro& quadro,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::excluirQuadro */
-        void excluirQuadro(
-            const Identificador& identificador,
-            const EMAIL& gestor
-        ) override;
+        void excluirQuadro(const Identificador& identificador,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::listarQuadros */
-        vector<Identificador> listarQuadros(
-            const Identificador& projeto
-        ) override;
+        vector<Identificador> listarQuadros(const Identificador& projeto) override;
 
 
         /** @copydoc IServicoKanban::criarCartao */
-        void criarCartao(
-            const CartaoAtividade& cartao,
-            const Identificador& quadro,
-            const EMAIL& gestor
-        ) override;
+        void criarCartao(const CartaoAtividade& cartao,const Identificador& quadro,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::lerCartao */
-        CartaoAtividade lerCartao(
-            const Identificador& identificador
-        ) override;
+        CartaoAtividade lerCartao(const Identificador& identificador) override;
 
         /** @copydoc IServicoKanban::atualizarCartao */
-        void atualizarCartao(
-            const CartaoAtividade& cartao,
-            const EMAIL& gestor
-        ) override;
+        void atualizarCartao(const CartaoAtividade& cartao,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::excluirCartao */
-        void excluirCartao(
-            const Identificador& identificador,
-            const EMAIL& gestor
-        ) override;
+        void excluirCartao(const Identificador& identificador,const EMAIL& gestor) override;
 
         /** @copydoc IServicoKanban::listarCartoes */
-        vector<Identificador> listarCartoes(
-            const Identificador& quadro
-        ) override;
+        vector<Identificador> listarCartoes(const Identificador& quadro) override;
 
         /** @copydoc IServicoKanban::moverCartao */
-        void moverCartao(
-            const Identificador& identificador,
-            const Timestamp& momento
-        ) override;
+        void moverCartao(const Identificador& identificador,const Timestamp& momento) override;
 
 
         /** @copydoc IServicoKanban::lerTempoCiclo */
-        int lerTempoCiclo(
-            const Identificador& identificador
-        ) override;
+        int lerTempoCiclo(const Identificador& identificador) override;
 
         /** @copydoc IServicoKanban::lerTempoCicloMedio */
-        double lerTempoCicloMedio(
-            const Identificador& quadro
-        ) override;
+        double lerTempoCicloMedio(const Identificador& quadro) override;
 
         /** @copydoc IServicoKanban::lerLeadTime */
-        int lerLeadTime(
-            const Identificador& identificador
-        ) override;
+        int lerLeadTime(const Identificador& identificador) override;
 
         /** @copydoc IServicoKanban::lerLeadTimeMedio */
-        double lerLeadTimeMedio(
-            const Identificador& quadro
-        ) override;
+        double lerLeadTimeMedio(const Identificador& quadro) override;
 
         /** @copydoc IServicoKanban::lerWIP */
-        int lerWIP(
-            const Identificador& quadro
-        ) override;
+        int lerWIP(const Identificador& quadro) override;
 };
 
 #endif // CNTR_SERVICO_KAN_HPP_INCLUDED
