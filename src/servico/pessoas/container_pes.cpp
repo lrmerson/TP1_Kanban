@@ -12,9 +12,7 @@ ContainerPessoa* ContainerPessoa::getInstancia() {
 
 bool ContainerPessoa::incluir(const Pessoa& pessoa) {
 
-    for (list<Pessoa>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Pessoa>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getEmail().getValor() ==
             pessoa.getEmail().getValor()) {
@@ -30,9 +28,7 @@ bool ContainerPessoa::incluir(const Pessoa& pessoa) {
 
 bool ContainerPessoa::remover(const EMAIL& email) {
 
-    for (list<Pessoa>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Pessoa>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getEmail().getValor() ==
             email.getValor()) {
@@ -48,9 +44,7 @@ bool ContainerPessoa::remover(const EMAIL& email) {
 
 bool ContainerPessoa::pesquisar(Pessoa* pessoa) {
 
-    for (list<Pessoa>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Pessoa>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getEmail().getValor() ==
             pessoa->getEmail().getValor()) {
@@ -66,9 +60,7 @@ bool ContainerPessoa::pesquisar(Pessoa* pessoa) {
 
 bool ContainerPessoa::atualizar(const Pessoa& pessoa) {
 
-    for (list<Pessoa>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Pessoa>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getEmail().getValor() ==
             pessoa.getEmail().getValor()) {
@@ -86,9 +78,7 @@ vector<Pessoa> ContainerPessoa::listar() {
 
     vector<Pessoa> pessoas;
 
-    for (list<Pessoa>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Pessoa>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         pessoas.push_back(*elemento);
     }
