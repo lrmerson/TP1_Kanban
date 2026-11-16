@@ -1,49 +1,231 @@
-#ifndef CNTR_APRESENTACAO_PES_HPP_INCLUDED
-#define CNTR_APRESENTACAO_PES_HPP_INCLUDED
+#include "apresentacao/pessoas/cntr_apresentacao_pes.hpp"
 
-#include <iostream>
-#include <string>
-#include <stdexcept>
-#include <vector>
 
-#include "interfaces/apresentacao/interfaces_apresentacao.hpp"
-#include "interfaces/servico/interfaces_servico.hpp"
+namespace {
 
-#include "apresentacao/utilitarios_apresentacao.hpp"
+const string DICA_EMAIL = "letras minusculas, ex: ana@unb.br";
 
-using namespace std;
+const string DICA_NOME = "ate 15 letras, ex: Ana Souza";
 
-/**
- * @brief Controla a interface com o usuário para serviços de pessoas.
- */
-class CntrApresentacaoPessoa : public IApresentacaoPessoa {
-    private:
-        IServicoPessoa* cntrServicoPessoa;
+const string DICA_SENHA = "5 caracteres com letras e numeros, ex: abc12";
 
-        void ler();
+const string DICA_PAPEL = "GESTOR ou DESENVOLVEDOR";
 
-        void atualizar(const EMAIL& email);
+}
 
-        bool excluir(const EMAIL& email);
 
-        void listar();
+void CntrApresentacaoPessoa::setCntrServicoPessoa(IServicoPessoa* servico) {
 
-    public:
+    cntrServicoPessoa = servico;
+}
 
-        /**
-         * @copydoc IApresentacaoPessoa::cadastrar
-         */
-        void cadastrar() override;
 
-        /**
-         * @copydoc IApresentacaoPessoa::executar
-         */
-        bool executar(const EMAIL& email) override;
+void CntrApresentacaoPessoa::cadastrar() {
 
-        /**
-         * @copydoc IApresentacaoPessoa::setCntrServicoPessoa
-         */
-        void setCntrServicoPessoa(IServicoPessoa* servico) override;
-};
+    acao("Criar conta");
 
-#endif // CNTR_APRESENTACAO_PES_HPP_INCLUDED
+    EMAIL email;
+    Nome nome;
+    Senha senha;
+    Papel papel;
+
+    if (!lerCampo("E-mail", DICA_EMAIL, email) || !lerCampo("Nome", DICA_NOME, nome) || !lerCampo("Senha", DICA_SENHA, senha) || !lerCampo("Papel", DICA_PAPEL, papel)) {
+
+        cancelado();
+
+        return;
+    }
+
+    try {
+
+        Pessoa pessoa;
+
+        pessoa.setEmail(email);
+
+        pessoa.setNome(nome);
+
+        pessoa.setSenha(senha);
+
+        pessoa.setPapel(papel);
+
+        cntrServicoPessoa->criar(pessoa);
+
+        sucesso("Conta criada com sucesso.");
+    }
+    catch (runtime_error& excecao) {
+
+        erro(excecao.what());
+    }
+}
+
+
+bool CntrApresentacaoPessoa::executar(const EMAIL& email) {
+
+    int opcao = -1;
+
+    while (opcao != 0) {
+
+        titulo("PESSOAS");
+
+        item(1, "Ler pessoa");
+
+        item(2, "Atualizar minha conta");
+
+        item(3, "Excluir minha conta");
+
+        item(4, "Listar pessoas");
+
+        item(0, "Voltar");
+
+        opcao = lerOpcao();
+
+        if (opcao == 1) {
+
+            ler();
+        }
+        else if (opcao == 2) {
+
+            atualizar(email);
+        }
+        else if (opcao == 3) {
+
+            if (excluir(email)) {
+
+                return false;
+            }
+        }
+        else if (opcao == 4) {
+
+            listar();
+        }
+        else if (opcao != 0) {
+
+            aviso("Opcao invalida. Digite um dos numeros do menu.");
+        }
+    }
+
+    return true;
+}
+
+
+void CntrApresentacaoPessoa::ler() {
+
+    acao("Ler pessoa");
+
+    EMAIL email;
+
+    if (!lerCampo("E-mail da pessoa", DICA_EMAIL, email)) {
+
+        cancelado();
+
+        return;
+    }
+
+    try {
+
+        Pessoa pessoa = cntrServicoPessoa->ler(email);
+
+        cout << endl;
+
+        saida("E-mail", pessoa.getEmail().getValor());
+
+        saida("Nome", pessoa.getNome().getValor());
+
+        saida("Papel", pessoa.getPapel().getValor());
+    }
+    catch (runtime_error& excecao) {
+
+        erro(excecao.what());
+    }
+}
+
+
+void CntrApresentacaoPessoa::atualizar(const EMAIL& email) {
+
+    acao("Atualizar minha conta");
+
+    cout << "   E-mail (nao pode ser alterado): " << email.getValor() << endl;
+
+    Nome nome;
+    Senha senha;
+    Papel papel;
+
+    if (!lerCampo("Novo nome", DICA_NOME, nome) || !lerCampo("Nova senha", DICA_SENHA, senha) || !lerCampo("Novo papel", DICA_PAPEL, papel)) {
+        cancelado();
+
+        return;
+    }
+
+    try {
+
+        Pessoa pessoa;
+
+        pessoa.setEmail(email);
+
+        pessoa.setNome(nome);
+
+        pessoa.setSenha(senha);
+
+        pessoa.setPapel(papel);
+
+        cntrServicoPessoa->atualizar(pessoa);
+
+        sucesso("Conta atualizada com sucesso.");
+    }
+    catch (runtime_error& excecao) {
+
+        erro(excecao.what());
+    }
+}
+
+
+bool CntrApresentacaoPessoa::excluir(const EMAIL& email) {
+
+    acao("Excluir minha conta", false);
+
+    string resposta = lerLinha("  Tem certeza que deseja excluir sua conta? (S/N): ");
+
+    if (resposta != "S" && resposta != "s") {
+
+        cancelado();
+
+        return false;
+    }
+
+    try {
+
+        cntrServicoPessoa->excluir(email);
+
+        sucesso("Conta excluida com sucesso.");
+
+        return true;
+    }
+    catch (runtime_error& excecao) {
+
+        erro(excecao.what());
+    }
+
+    return false;
+}
+
+
+void CntrApresentacaoPessoa::listar() {
+
+    acao("Pessoas cadastradas", false);
+
+    try {
+
+        vector<EMAIL> emails = cntrServicoPessoa-> listar();
+
+        vector<string> itens;
+
+        for (size_t i = 0; i < emails.size(); i++) {
+            itens.push_back(emails[i].getValor());
+        }
+
+        listaItens(itens);
+    }
+    catch (runtime_error& excecao) {
+        erro(excecao.what());
+    }
+}
