@@ -12,9 +12,7 @@ ContainerProjeto* ContainerProjeto::getInstancia() {
 
 bool ContainerProjeto::incluir(const Projeto& projeto) {
 
-    for (list<Projeto>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Projeto>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getIdentificador().getValor() ==
             projeto.getIdentificador().getValor()) {
@@ -30,9 +28,7 @@ bool ContainerProjeto::incluir(const Projeto& projeto) {
 
 bool ContainerProjeto::remover(const Identificador& identificador) {
 
-    for (list<Projeto>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Projeto>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getIdentificador().getValor() ==
             identificador.getValor()) {
@@ -48,9 +44,7 @@ bool ContainerProjeto::remover(const Identificador& identificador) {
 
 bool ContainerProjeto::pesquisar(Projeto* projeto) {
 
-    for (list<Projeto>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Projeto>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getIdentificador().getValor() ==
             projeto->getIdentificador().getValor()) {
@@ -66,9 +60,7 @@ bool ContainerProjeto::pesquisar(Projeto* projeto) {
 
 bool ContainerProjeto::atualizar(const Projeto& projeto) {
 
-    for (list<Projeto>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Projeto>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         if (elemento->getIdentificador().getValor() ==
             projeto.getIdentificador().getValor()) {
@@ -86,9 +78,7 @@ vector<Projeto> ContainerProjeto::listar() {
 
     vector<Projeto> projetos;
 
-    for (list<Projeto>::iterator elemento = container.begin();
-         elemento != container.end();
-         elemento++) {
+    for (list<Projeto>::iterator elemento = container.begin(); elemento != container.end(); elemento++) {
 
         projetos.push_back(*elemento);
     }
