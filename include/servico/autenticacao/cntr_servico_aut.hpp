@@ -13,10 +13,7 @@ class CntrServicoAutenticacao : public IServicoAutenticacao {
         /**
          * @copydoc IServicoAutenticacao::autenticar
          */
-        bool autenticar(
-            const EMAIL& email,
-            const Senha& senha
-        ) override;
+        bool autenticar(const EMAIL& email,const Senha& senha) override;
 };
 
 #endif // CNTR_SERVICO_AUT_HPP_INCLUDED
