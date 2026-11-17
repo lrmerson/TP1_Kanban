@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\TP1_Kanban" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/TP1_Kanban" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -16,8 +16,8 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\TP1_Kanban" />
-				<Option object_output="obj\Release\" />
+				<Option output="bin/Release/TP1_Kanban" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -29,8 +29,8 @@
 				</Linker>
 			</Target>
 			<Target title="Testes">
-				<Option output="bin\Testes\TP1_Kanban_Testes" />
-				<Option object_output="obj\Testes\" />
+				<Option output="bin/Testes/TP1_Kanban_Testes" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Testes/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -42,72 +42,130 @@
 			<Add option="-std=c++17" />
 			<Add directory="include" />
 		</Compiler>
-		<Unit filename="src\main.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/apresentacao/controladoras_apresentacao.hpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\dominio\dominios.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="src\entidades\entidades.cpp">
-			<Option compilerVar="CPP" />
-		</Unit>
-		<Unit filename="src\servico\containers.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/dominio/dominios.hpp" />
+		<Unit filename="include/entidades/entidades.hpp" />
+		<Unit filename="include/interfaces/apresentacao/interfaces_apresentacao.hpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\servico\controladoras_servico.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/interfaces/servico/interfaces_servico.hpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\apresentacao\controladoras_apresentacao.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/servico/containers.hpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src\testes\testes_dominios.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/servico/controladoras_servico.hpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/testes/testes_dominios.hpp">
 			<Option target="Testes" />
 		</Unit>
-		<Unit filename="src\testes\testes_entidades.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="include/testes/testes_entidades.hpp">
 			<Option target="Testes" />
 		</Unit>
-		<Unit filename="src\testes\main_testes.cpp">
-			<Option compilerVar="CPP" />
+		<Unit filename="src/apresentacao/autenticacao/cntr_apresentacao_aut.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/inicializacao/cntr_apresentacao_ic.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/kanban/cntr_apresentacao_car.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/kanban/cntr_apresentacao_kan.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/kanban/cntr_apresentacao_met.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/kanban/cntr_apresentacao_qua.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/pessoas/cntr_apresentacao_pes.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/projetos/cntr_apresentacao_pro.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/utilitarios_apresentacao.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/dominio/dominios.cpp" />
+		<Unit filename="src/entidades/entidades.cpp" />
+		<Unit filename="src/main.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/autenticacao/cntr_servico_aut.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/cntr_servico_car.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/cntr_servico_kan.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/cntr_servico_met.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/cntr_servico_qua.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/container_car.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/kanban/container_qua.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/pessoas/cntr_servico_pes.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/pessoas/container_pes.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/projetos/cntr_servico_pro.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/servico/projetos/container_pro.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/testes/main_testes.cpp">
 			<Option target="Testes" />
 		</Unit>
-		<Unit filename="include\dominio\dominios.hpp" />
-		<Unit filename="include\entidades\entidades.hpp" />
-		<Unit filename="include\interfaces\interfaces.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include\servico\containers.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include\servico\controladoras_servico.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include\apresentacao\controladoras_apresentacao.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include\testes\testes_dominios.hpp">
+		<Unit filename="src/testes/testes_dominios.cpp">
 			<Option target="Testes" />
 		</Unit>
-		<Unit filename="include\testes\testes_entidades.hpp">
+		<Unit filename="src/testes/testes_entidades.cpp">
 			<Option target="Testes" />
 		</Unit>
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
