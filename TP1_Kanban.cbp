@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/TP1_Kanban" prefix_auto="0" extension_auto="0" />
+				<Option output="bin/Debug/TP1_Kanban" prefix_auto="0" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/TP1_Kanban" prefix_auto="0" extension_auto="0" />
+				<Option output="bin/Release/TP1_Kanban" prefix_auto="0" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -29,7 +29,7 @@
 				</Linker>
 			</Target>
 			<Target title="Testes">
-				<Option output="bin/Testes/TP1_Kanban_Testes" prefix_auto="0" extension_auto="0" />
+				<Option output="bin/Testes/TP1_Kanban_Testes" prefix_auto="0" extension_auto="1" />
 				<Option object_output="obj/Testes/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -42,10 +42,6 @@
 			<Add option="-std=c++17" />
 			<Add directory="include" />
 		</Compiler>
-		<Unit filename="include/apresentacao/controladoras_apresentacao.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="include/dominio/dominios.hpp" />
 		<Unit filename="include/entidades/entidades.hpp" />
 		<Unit filename="include/interfaces/apresentacao/interfaces_apresentacao.hpp">
@@ -53,14 +49,6 @@
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="include/interfaces/servico/interfaces_servico.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include/servico/containers.hpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
-		<Unit filename="include/servico/controladoras_servico.hpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
