@@ -22,11 +22,35 @@ src/
 smoke_test.txt   Entradas do teste fumaça (um caso por funcionalidade)
 ```
 
-Pelo terminal, a aplicação pode ser compilada com:
+
+Pelo terminal, a aplicação também pode ser compilada manualmente com:
 
 ```sh
-g++ -std=c++17 -Iinclude src/main.cpp src/dominio/*.cpp src/entidades/*.cpp src/servico/*.cpp src/apresentacao/*.cpp -o kanban
-./kanban < smoke_test.txt
+g++ -std=c++17 -Iinclude \
+src/main.cpp \
+src/dominio/dominios.cpp \
+src/entidades/entidades.cpp \
+src/servico/autenticacao/cntr_servico_aut.cpp \
+src/servico/pessoas/container_pes.cpp \
+src/servico/pessoas/cntr_servico_pes.cpp \
+src/servico/projetos/container_pro.cpp \
+src/servico/projetos/cntr_servico_pro.cpp \
+src/servico/kanban/container_qua.cpp \
+src/servico/kanban/container_car.cpp \
+src/servico/kanban/cntr_servico_qua.cpp \
+src/servico/kanban/cntr_servico_car.cpp \
+src/servico/kanban/cntr_servico_met.cpp \
+src/servico/kanban/cntr_servico_kan.cpp \
+src/apresentacao/utilitarios_apresentacao.cpp \
+src/apresentacao/autenticacao/cntr_apresentacao_aut.cpp \
+src/apresentacao/pessoas/cntr_apresentacao_pes.cpp \
+src/apresentacao/projetos/cntr_apresentacao_pro.cpp \
+src/apresentacao/kanban/cntr_apresentacao_qua.cpp \
+src/apresentacao/kanban/cntr_apresentacao_car.cpp \
+src/apresentacao/kanban/cntr_apresentacao_met.cpp \
+src/apresentacao/kanban/cntr_apresentacao_kan.cpp \
+src/apresentacao/inicializacao/cntr_apresentacao_ic.cpp \
+-o kanban
 ```
 
 ## Compilar
