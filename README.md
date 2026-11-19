@@ -11,13 +11,11 @@ include/
   interfaces/    Interfaces (classes abstratas) entre os módulos
   apresentacao/  Controladoras da camada de apresentação (cin/cout)
   servico/       Controladoras e contêineres da camada de serviço
-  testes/        Testes de unidade
 src/
   dominio/
   entidades/
   apresentacao/
   servico/
-  testes/
   main.cpp       Montagem do sistema (injeção de dependências)
 smoke_test.txt   Entradas do teste fumaça (um caso por funcionalidade)
 ```
@@ -71,25 +69,6 @@ O projeto exige um compilador com suporte a C++17.
 Nos menus, digite `0` e pressione Enter para voltar. Ao preencher os campos
 de uma operação, digite `0` ou pressione Enter em branco para cancelá-la e
 voltar ao menu. Um dado inválido pode ser digitado novamente no mesmo campo.
-
-## Testes de unidade
-
-Os testes ficam em `include/testes/` e `src/testes/`, com um executável
-próprio (`src/testes/main_testes.cpp`) separado do `main.cpp` da aplicação.
-Cada classe `TU<Dominio>` verifica o cenário de sucesso (valores válidos são
-aceitos) e o de falha (valores inválidos lançam `invalid_argument` sem alterar
-o valor armazenado).
-
-No Code::Blocks, selecione o alvo `Testes` e use **Build and run** (F9).
-Pelo terminal:
-
-```sh
-g++ -std=c++17 -Iinclude src/dominio/*.cpp src/entidades/*.cpp src/testes/*.cpp -o testes
-./testes
-```
-
-Cada teste imprime `SUCESSO` ou `FALHA`; o programa retorna 0 somente se
-todos passarem.
 
 ## Documentação com Doxygen
 
