@@ -1,78 +1,64 @@
 #include "apresentacao/projetos/cntr_apresentacao_pro.hpp"
 
+#include "apresentacao/entrada_usuario.hpp"
+#include "apresentacao/saida_usuario.hpp"
+
 
 namespace {
 
 const string DICA_NOME = "ate 15 letras, ex: Projeto A";
-
 const string DICA_TEXTO = "ate 30 caracteres, inicia com maiuscula e termina com ponto";
-
 const string DICA_DATA = "DIA-MES-ANO-HH:MM, ex: 01-OUT-2026-09:00";
-
 const string DICA_PROJETO = "3 letras + 3 numeros, ex: PRJ001";
 
 }
 
 
 void CntrApresentacaoProjeto::setCntrServicoProjeto(IServicoProjeto* servico) {
-
     cntrServicoProjeto = servico;
 }
 
 
 void CntrApresentacaoProjeto::executar(const EMAIL& email) {
-
     int opcao = -1;
 
     while (opcao != 0) {
+        SaidaUsuario::titulo("PROJETOS");
 
-        titulo("PROJETOS");
+        SaidaUsuario::item(1, "Criar projeto");
+        SaidaUsuario::item(2, "Ler projeto");
+        SaidaUsuario::item(3, "Atualizar projeto");
+        SaidaUsuario::item(4, "Excluir projeto");
+        SaidaUsuario::item(5, "Listar projetos");
+        SaidaUsuario::item(0, "Voltar");
 
-        item(1, "Criar projeto");
-
-        item(2, "Ler projeto");
-
-        item(3, "Atualizar projeto");
-
-        item(4, "Excluir projeto");
-
-        item(5, "Listar projetos");
-
-        item(0, "Voltar");
-
-        opcao = lerOpcao();
+        SaidaUsuario::separador();
+        opcao = EntradaUsuario::lerOpcao();
 
         if (opcao == 1) {
-
             criar(email);
         }
         else if (opcao == 2) {
-
             ler();
         }
         else if (opcao == 3) {
-
             atualizar(email);
         }
         else if (opcao == 4) {
-
             excluir(email);
         }
         else if (opcao == 5) {
-
             listar();
         }
         else if (opcao != 0) {
-
-            aviso("Opcao invalida. Digite um dos numeros do menu.");
+            SaidaUsuario::aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
 
 
 void CntrApresentacaoProjeto::criar(const EMAIL& email) {
-
-    acao("Criar projeto");
+    SaidaUsuario::acao("Criar projeto");
 
     Identificador identificador;
     Nome nome;
@@ -80,79 +66,65 @@ void CntrApresentacaoProjeto::criar(const EMAIL& email) {
     Timestamp inicio;
     Timestamp termino;
 
-    if (!lerCampo("Identificador", DICA_PROJETO, identificador) || !lerCampo("Nome", DICA_NOME, nome) || !lerCampo("Descricao", DICA_TEXTO, descricao) || !lerCampo("Inicio", DICA_DATA, inicio) || !lerCampo("Termino", DICA_DATA, termino)) {
+    if (!EntradaUsuario::lerCampo("Identificador", DICA_PROJETO, identificador) ||
+        !EntradaUsuario::lerCampo("Nome", DICA_NOME, nome) ||
+        !EntradaUsuario::lerCampo("Descricao", DICA_TEXTO, descricao) ||
+        !EntradaUsuario::lerCampo("Inicio", DICA_DATA, inicio) ||
+        !EntradaUsuario::lerCampo("Termino", DICA_DATA, termino)) {
 
-        cancelado();
-
+        SaidaUsuario::cancelado();
         return;
     }
 
     try {
-
         Projeto projeto;
 
         projeto.setIdentificador(identificador);
-
         projeto.setNome(nome);
-
         projeto.setDescricao(descricao);
-
         projeto.setInicio(inicio);
-
         projeto.setTermino(termino);
 
         cntrServicoProjeto->criar(projeto, email);
 
-        sucesso("Projeto criado com sucesso.");
+        SaidaUsuario::sucesso("Projeto criado com sucesso.");
     }
     catch (runtime_error& excecao) {
-
-        erro(excecao.what());
+        SaidaUsuario::erro(excecao.what());
     }
 }
 
 
 void CntrApresentacaoProjeto::ler() {
-
-    acao("Ler projeto");
+    SaidaUsuario::acao("Ler projeto");
 
     Identificador identificador;
 
-    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
-
-        cancelado();
-
+    if (!EntradaUsuario::lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
+        SaidaUsuario::cancelado();
         return;
     }
 
     try {
-
         Projeto projeto = cntrServicoProjeto->ler(identificador);
 
         cout << endl;
 
-        saida("Identificador", projeto.getIdentificador().getValor());
-
-        saida("Nome", projeto.getNome().getValor());
-
-        saida("Descricao", projeto.getDescricao().getValor());
-
-        saida("Inicio", projeto.getInicio().getValor());
-
-        saida("Termino", projeto.getTermino().getValor());
-
-        saida("Gestor", projeto.getGestor().getValor());
+        SaidaUsuario::saida("Identificador", projeto.getIdentificador().getValor());
+        SaidaUsuario::saida("Nome", projeto.getNome().getValor());
+        SaidaUsuario::saida("Descricao", projeto.getDescricao().getValor());
+        SaidaUsuario::saida("Inicio", projeto.getInicio().getValor());
+        SaidaUsuario::saida("Termino", projeto.getTermino().getValor());
+        SaidaUsuario::saida("Gestor", projeto.getGestor().getValor());
     }
     catch (runtime_error& excecao) {
-
-        erro(excecao.what());
+        SaidaUsuario::erro(excecao.what());
     }
 }
 
 
 void CntrApresentacaoProjeto::atualizar(const EMAIL& email) {
-
-    acao("Atualizar projeto");
+    SaidaUsuario::acao("Atualizar projeto");
 
     Identificador identificador;
     Nome nome;
@@ -160,83 +132,71 @@ void CntrApresentacaoProjeto::atualizar(const EMAIL& email) {
     Timestamp inicio;
     Timestamp termino;
 
-    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador) || !lerCampo("Novo nome", DICA_NOME, nome) || !lerCampo("Nova descricao", DICA_TEXTO, descricao) || !lerCampo("Novo inicio", DICA_DATA, inicio) || !lerCampo("Novo termino", DICA_DATA, termino)) {
+    if (!EntradaUsuario::lerCampo("Identificador do projeto", DICA_PROJETO, identificador) ||
+        !EntradaUsuario::lerCampo("Novo nome", DICA_NOME, nome) ||
+        !EntradaUsuario::lerCampo("Nova descricao", DICA_TEXTO, descricao) ||
+        !EntradaUsuario::lerCampo("Novo inicio", DICA_DATA, inicio) ||
+        !EntradaUsuario::lerCampo("Novo termino", DICA_DATA, termino)) {
 
-        cancelado();
-
+        SaidaUsuario::cancelado();
         return;
     }
 
     try {
-
         Projeto projeto;
 
         projeto.setIdentificador(identificador);
-
         projeto.setNome(nome);
-
         projeto.setDescricao(descricao);
-
         projeto.setInicio(inicio);
-
         projeto.setTermino(termino);
 
         cntrServicoProjeto->atualizar(projeto, email);
 
-        sucesso("Projeto atualizado com sucesso.");
+        SaidaUsuario::sucesso("Projeto atualizado com sucesso.");
     }
     catch (runtime_error& excecao) {
-
-        erro(excecao.what());
+        SaidaUsuario::erro(excecao.what());
     }
 }
 
 
 void CntrApresentacaoProjeto::excluir(const EMAIL& email) {
-
-    acao("Excluir projeto");
+    SaidaUsuario::acao("Excluir projeto");
 
     Identificador identificador;
 
-    if (!lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
-
-        cancelado();
-
+    if (!EntradaUsuario::lerCampo("Identificador do projeto", DICA_PROJETO, identificador)) {
+        SaidaUsuario::cancelado();
         return;
     }
 
     try {
-
         cntrServicoProjeto->excluir(identificador, email);
 
-        sucesso("Projeto excluido com sucesso.");
+        SaidaUsuario::sucesso("Projeto excluido com sucesso.");
     }
     catch (runtime_error& excecao) {
-
-        erro(excecao.what());
+        SaidaUsuario::erro(excecao.what());
     }
 }
 
 
 void CntrApresentacaoProjeto::listar() {
-
-    acao("Projetos cadastrados",false);
+    SaidaUsuario::acao("Projetos cadastrados", false);
 
     try {
-
         vector<Identificador> identificadores = cntrServicoProjeto->listar();
 
         vector<string> itens;
 
         for (size_t i = 0; i < identificadores.size(); i++) {
-
             itens.push_back(identificadores[i].getValor());
         }
 
-        listaItens(itens);
+        SaidaUsuario::listaItens(itens);
     }
     catch (runtime_error& excecao) {
-
-        erro(excecao.what());
+        SaidaUsuario::erro(excecao.what());
     }
 }

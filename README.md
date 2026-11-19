@@ -41,7 +41,8 @@ src/servico/kanban/cntr_servico_qua.cpp \
 src/servico/kanban/cntr_servico_car.cpp \
 src/servico/kanban/cntr_servico_met.cpp \
 src/servico/kanban/cntr_servico_kan.cpp \
-src/apresentacao/utilitarios_apresentacao.cpp \
+src/apresentacao/entrada_usuario.cpp \
+src/apresentacao/saida_usuario.cpp \
 src/apresentacao/autenticacao/cntr_apresentacao_aut.cpp \
 src/apresentacao/pessoas/cntr_apresentacao_pes.cpp \
 src/apresentacao/projetos/cntr_apresentacao_pro.cpp \

@@ -7,7 +7,6 @@
 #include "apresentacao/kanban/cntr_apresentacao_qua.hpp"
 #include "apresentacao/kanban/cntr_apresentacao_car.hpp"
 #include "apresentacao/kanban/cntr_apresentacao_met.hpp"
-#include "apresentacao/utilitarios_apresentacao.hpp"
 
 /**
  * @brief Fachada da apresentação do subsistema Kanban.

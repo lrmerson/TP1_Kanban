@@ -42,6 +42,16 @@
 			<Add option="-std=c++17" />
 			<Add directory="include" />
 		</Compiler>
+		<Unit filename="include/apresentacao/autenticacao/cntr_apresentacao_aut.hpp" />
+		<Unit filename="include/apresentacao/entrada_usuario.hpp" />
+		<Unit filename="include/apresentacao/inicializacao/cntr_apresentacao_ic.hpp" />
+		<Unit filename="include/apresentacao/kanban/cntr_apresentacao_car.hpp" />
+		<Unit filename="include/apresentacao/kanban/cntr_apresentacao_kan.hpp" />
+		<Unit filename="include/apresentacao/kanban/cntr_apresentacao_met.hpp" />
+		<Unit filename="include/apresentacao/kanban/cntr_apresentacao_qua.hpp" />
+		<Unit filename="include/apresentacao/pessoas/cntr_apresentacao_pes.hpp" />
+		<Unit filename="include/apresentacao/projetos/cntr_apresentacao_pro.hpp" />
+		<Unit filename="include/apresentacao/saida_usuario.hpp" />
 		<Unit filename="include/dominio/dominios.hpp" />
 		<Unit filename="include/entidades/entidades.hpp" />
 		<Unit filename="include/interfaces/apresentacao/interfaces_apresentacao.hpp">
@@ -59,6 +69,10 @@
 			<Option target="Testes" />
 		</Unit>
 		<Unit filename="src/apresentacao/autenticacao/cntr_apresentacao_aut.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/apresentacao/entrada_usuario.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
@@ -90,7 +104,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src/apresentacao/utilitarios_apresentacao.cpp">
+		<Unit filename="src/apresentacao/saida_usuario.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>

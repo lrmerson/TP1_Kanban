@@ -2,7 +2,6 @@
 #define CNTR_APRESENTACAO_IC_HPP_INCLUDED
 
 #include "interfaces/apresentacao/interfaces_apresentacao.hpp"
-#include "apresentacao/utilitarios_apresentacao.hpp"
 
 /**
  * @brief Controla a inicialização e a navegação principal do sistema.

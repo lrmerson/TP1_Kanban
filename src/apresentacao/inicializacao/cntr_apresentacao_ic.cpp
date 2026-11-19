@@ -1,38 +1,48 @@
 #include "apresentacao/inicializacao/cntr_apresentacao_ic.hpp"
 
+#include "apresentacao/entrada_usuario.hpp"
+#include "apresentacao/saida_usuario.hpp"
+
+
 void CntrApresentacaoInicializacao::setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao* cntr) {
     cntrApresentacaoAutenticacao = cntr;
 }
+
 
 void CntrApresentacaoInicializacao::setCntrApresentacaoPessoa(IApresentacaoPessoa* cntr) {
     cntrApresentacaoPessoa = cntr;
 }
 
+
 void CntrApresentacaoInicializacao::setCntrApresentacaoProjeto(IApresentacaoProjeto* cntr) {
     cntrApresentacaoProjeto = cntr;
 }
+
 
 void CntrApresentacaoInicializacao::setCntrApresentacaoKanban(IApresentacaoKanban* cntr) {
     cntrApresentacaoKanban = cntr;
 }
 
+
 void CntrApresentacaoInicializacao::executar() {
     int opcao = -1;
 
     while (opcao != 0) {
-        titulo("SISTEMA KANBAN", "Gestao de projetos com quadros Kanban");
+        SaidaUsuario::titulo("SISTEMA KANBAN", "Gestao de projetos com quadros Kanban");
 
-        item(1, "Entrar");
-        item(2, "Criar conta");
-        item(0, "Sair");
+        SaidaUsuario::item(1, "Entrar");
+        SaidaUsuario::item(2, "Criar conta");
+        SaidaUsuario::item(0, "Sair");
 
-        opcao = lerOpcao();
+        SaidaUsuario::separador();
+
+        opcao = EntradaUsuario::lerOpcao();
 
         if (opcao == 1) {
             EMAIL email;
 
             if (cntrApresentacaoAutenticacao->autenticar(&email)) {
-                sucesso("Autenticacao realizada com sucesso.");
+                SaidaUsuario::sucesso("Autenticacao realizada com sucesso.");
                 menuServicos(email);
             }
         }
@@ -40,25 +50,28 @@ void CntrApresentacaoInicializacao::executar() {
             cntrApresentacaoPessoa->cadastrar();
         }
         else if (opcao != 0) {
-            aviso("Opcao invalida. Digite um dos numeros do menu.");
+            SaidaUsuario::aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 
     cout << endl << "Ate logo!" << endl;
 }
 
+
 void CntrApresentacaoInicializacao::menuServicos(const EMAIL& email) {
     int opcao = -1;
 
     while (opcao != 0) {
-        titulo("MENU PRINCIPAL", "Conectado como: " + email.getValor());
+        SaidaUsuario::titulo("MENU PRINCIPAL", "Conectado como: " + email.getValor());
 
-        item(1, "Pessoas");
-        item(2, "Projetos");
-        item(3, "Kanban");
-        item(0, "Sair da conta");
+        SaidaUsuario::item(1, "Pessoas");
+        SaidaUsuario::item(2, "Projetos");
+        SaidaUsuario::item(3, "Kanban");
+        SaidaUsuario::item(0, "Sair da conta");
 
-        opcao = lerOpcao();
+        SaidaUsuario::separador();
+
+        opcao = EntradaUsuario::lerOpcao();
 
         if (opcao == 1) {
             if (!cntrApresentacaoPessoa->executar(email)) {
@@ -72,7 +85,7 @@ void CntrApresentacaoInicializacao::menuServicos(const EMAIL& email) {
             cntrApresentacaoKanban->executar(email);
         }
         else if (opcao != 0) {
-            aviso("Opcao invalida. Digite um dos numeros do menu.");
+            SaidaUsuario::aviso("Opcao invalida. Digite um dos numeros do menu.");
         }
     }
 }
