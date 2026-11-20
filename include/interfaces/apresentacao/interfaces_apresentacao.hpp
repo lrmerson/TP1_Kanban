@@ -25,6 +25,7 @@ class IApresentacaoAutenticacao {
 
         /**
          * @brief Define o serviço de autenticação utilizado.
+         * @param servico Interface do serviço de autenticação.
          */
         virtual void setCntrServicoAutenticacao(IServicoAutenticacao* servico) = 0;
 
@@ -56,6 +57,7 @@ class IApresentacaoPessoa {
 
         /**
          * @brief Define o serviço de pessoas utilizado.
+         * @param servico Interface do serviço de pessoas.
          */
         virtual void setCntrServicoPessoa(IServicoPessoa* servico) = 0;
 
@@ -74,11 +76,13 @@ class IApresentacaoProjeto {
 
         /**
          * @brief Executa o menu de serviços de projeto.
+         * @param email Pessoa atualmente autenticada.
          */
         virtual void executar(const EMAIL& email) = 0;
 
         /**
          * @brief Define o serviço de projetos utilizado.
+         * @param servico Interface do serviço de projetos.
          */
         virtual void setCntrServicoProjeto(IServicoProjeto* servico) = 0;
 
@@ -97,11 +101,13 @@ class IApresentacaoKanban {
 
         /**
          * @brief Executa o menu do subsistema Kanban.
+         * @param email Pessoa atualmente autenticada.
          */
         virtual void executar(const EMAIL& email) = 0;
 
         /**
          * @brief Define o serviço Kanban utilizado.
+         * @param servico Interface do serviço Kanban.
          */
         virtual void setCntrServicoKanban(IServicoKanban* servico) = 0;
 

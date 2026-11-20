@@ -42,6 +42,7 @@ class CntrServicoMetricas {
         /**
          * @brief Calcula o tempo de ciclo de um cartão concluído.
          *
+         * @param identificador Identificador do cartão.
          * @return Quantidade de minutos entre FAZENDO e FEITO.
          */
         int lerTempoCiclo(const Identificador& identificador);
@@ -49,12 +50,15 @@ class CntrServicoMetricas {
         /**
          * @brief Calcula o tempo de ciclo médio dos cartões
          * concluídos de um quadro.
+         * @param quadro Identificador do quadro.
+         * @return Tempo médio em minutos.
          */
         double lerTempoCicloMedio(const Identificador& quadro);
 
         /**
          * @brief Calcula o lead time de um cartão concluído.
          *
+         * @param identificador Identificador do cartão.
          * @return Quantidade de minutos entre A FAZER e FEITO.
          */
         int lerLeadTime(const Identificador& identificador);
@@ -62,12 +66,15 @@ class CntrServicoMetricas {
         /**
          * @brief Calcula o lead time médio dos cartões
          * concluídos de um quadro.
+         * @param quadro Identificador do quadro.
+         * @return Lead time médio em minutos.
          */
         double lerLeadTimeMedio(const Identificador& quadro);
 
         /**
          * @brief Retorna o WIP atual de um quadro.
          *
+         * @param quadro Identificador do quadro.
          * @return Quantidade de cartões na coluna FAZENDO.
          */
         int lerWIP(const Identificador& quadro);

@@ -39,31 +39,44 @@ class CntrServicoCartao {
 
         /**
          * @brief Cria um cartão em um quadro.
+         * @param cartao Dados do cartão.
+         * @param quadro Identificador do quadro.
+         * @param gestor Pessoa que solicita a operação.
          */
         void criar(const CartaoAtividade& cartao,const Identificador& quadro,const EMAIL& gestor);
 
         /**
          * @brief Busca um cartão pelo identificador.
+         * @param identificador Identificador do cartão.
+         * @return Cartão encontrado.
          */
         CartaoAtividade ler(const Identificador& identificador);
 
         /**
          * @brief Atualiza os dados editáveis de um cartão.
+         * @param cartao Dados atualizados do cartão.
+         * @param gestor Pessoa que solicita a operação.
          */
         void atualizar(const CartaoAtividade& cartao,const EMAIL& gestor);
 
         /**
          * @brief Exclui um cartão.
+         * @param identificador Identificador do cartão.
+         * @param gestor Pessoa que solicita a operação.
          */
         void excluir(const Identificador& identificador,const EMAIL& gestor);
 
         /**
          * @brief Lista os cartões pertencentes a um quadro.
+         * @param quadro Identificador do quadro.
+         * @return Identificadores dos cartões do quadro.
          */
         vector<Identificador> listar(const Identificador& quadro);
 
         /**
          * @brief Move o cartão para a próxima coluna do fluxo Kanban.
+         * @param identificador Identificador do cartão.
+         * @param momento Momento da movimentação.
          */
         void mover(const Identificador& identificador,const Timestamp& momento);
 };

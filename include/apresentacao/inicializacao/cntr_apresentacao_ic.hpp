@@ -4,7 +4,7 @@
 #include "interfaces/apresentacao/interfaces_apresentacao.hpp"
 
 /**
- * @brief Controla a inicialização e a navegação principal do sistema.
+ * @brief Controla a inicialização e a navegação do sistema.
  */
 class CntrApresentacaoInicializacao {
     private:
@@ -17,27 +17,31 @@ class CntrApresentacaoInicializacao {
 
     public:
         /**
-         * @brief Executa o fluxo principal da aplicação.
+         * @brief Inicia a aplicação e exibe o menu principal.
          */
         void executar();
 
         /**
-         * @brief Define a apresentação responsável pela autenticação.
+         * @brief Define a controladora de autenticação.
+         * @param cntr Controladora de autenticação.
          */
         void setCntrApresentacaoAutenticacao(IApresentacaoAutenticacao* cntr);
 
         /**
-         * @brief Define a apresentação responsável pelos serviços de pessoa.
+         * @brief Define a controladora de pessoas.
+         * @param cntr Controladora de pessoas.
          */
         void setCntrApresentacaoPessoa(IApresentacaoPessoa* cntr);
 
         /**
-         * @brief Define a apresentação responsável pelos serviços de projeto.
+         * @brief Define a controladora de projetos.
+         * @param cntr Controladora de projetos.
          */
         void setCntrApresentacaoProjeto(IApresentacaoProjeto* cntr);
 
         /**
-         * @brief Define a apresentação responsável pelos serviços Kanban.
+         * @brief Define a controladora Kanban.
+         * @param cntr Controladora do subsistema Kanban.
          */
         void setCntrApresentacaoKanban(IApresentacaoKanban* cntr);
 };

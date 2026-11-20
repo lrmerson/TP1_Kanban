@@ -29,26 +29,37 @@ class CntrServicoQuadro {
 
         /**
          * @brief Cria um quadro dentro de um projeto.
+         * @param quadro Dados do quadro.
+         * @param projeto Identificador do projeto.
+         * @param gestor Pessoa que solicita a operação.
          */
         void criar(const Quadro& quadro,const Identificador& projeto,const EMAIL& gestor);
 
         /**
          * @brief Busca um quadro pelo identificador.
+         * @param identificador Identificador do quadro.
+         * @return Quadro encontrado.
          */
         Quadro ler(const Identificador& identificador);
 
         /**
          * @brief Atualiza os dados de um quadro.
+         * @param quadro Dados atualizados do quadro.
+         * @param gestor Pessoa que solicita a operação.
          */
         void atualizar(const Quadro& quadro,const EMAIL& gestor);
 
         /**
          * @brief Exclui um quadro.
+         * @param identificador Identificador do quadro.
+         * @param gestor Pessoa que solicita a operação.
          */
         void excluir(const Identificador& identificador,const EMAIL& gestor);
 
         /**
          * @brief Lista os quadros pertencentes a um projeto.
+         * @param projeto Identificador do projeto.
+         * @return Identificadores dos quadros do projeto.
          */
         vector<Identificador> listar(const Identificador& projeto);
 };

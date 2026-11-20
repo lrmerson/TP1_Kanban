@@ -1,25 +1,30 @@
 # Identificação exibida na página inicial da documentação.
-PROJECT_NAME   = "TP1 Kanban"
-PROJECT_BRIEF  = "Documentação das classes do projeto TP1 Kanban"
+PROJECT_NAME        = "TP1 Kanban"
+PROJECT_BRIEF       = "Sistema Kanban em C++17 com arquitetura em camadas"
 
-# Cabeçalhos, implementações e instruções do projeto.
+# Cabeçalhos, implementações e documentação geral do projeto.
 INPUT          = include src README.md
 FILE_PATTERNS  = *.hpp *.cpp *.md
 RECURSIVE      = YES
 INPUT_ENCODING = UTF-8
 
-# Usa o README como página principal da documentação.
+# Usa o README como página principal e interpreta comentários no estilo Javadoc.
 USE_MDFILE_AS_MAINPAGE = README.md
+JAVADOC_AUTOBRIEF      = YES
+MARKDOWN_SUPPORT       = YES
 
-# Exibe a API documentada e verifica descrições de classes, membros e parâmetros.
-EXTRACT_ALL            = NO
-EXTRACT_PRIVATE        = NO
-WARN_IF_UNDOCUMENTED   = YES
-WARN_NO_PARAMDOC       = YES
-WARN_AS_ERROR          = NO
+# Documenta as classes e membros públicos descritos nos cabeçalhos.
+EXTRACT_ALL          = NO
+EXTRACT_PRIVATE      = NO
+HIDE_UNDOC_MEMBERS   = NO
+HIDE_UNDOC_CLASSES   = NO
+WARN_IF_UNDOCUMENTED = YES
+WARN_NO_PARAMDOC     = YES
+WARN_AS_ERROR        = NO
 
-# Mantém a saída sob build/ (ignorada pelo Git); a página inicial fica em build/html.
-OUTPUT_DIRECTORY = build
+# Mantém a saída sob doxygen/; a página inicial fica em doxygen/html.
+OUTPUT_DIRECTORY = doxygen
 GENERATE_HTML    = YES
 HTML_OUTPUT      = html
 GENERATE_LATEX   = NO
+GENERATE_XML     = NO

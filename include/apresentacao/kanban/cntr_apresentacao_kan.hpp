@@ -22,10 +22,14 @@ class CntrApresentacaoKanban : public IApresentacaoKanban {
         CntrApresentacaoMetricas cntrMetricas;
 
     public:
-        /** @copydoc IApresentacaoKanban::executar */
+        /**
+         * @copydoc IApresentacaoKanban::executar
+         */
         void executar(const EMAIL& email) override;
 
-        /** @copydoc IApresentacaoKanban::setCntrServicoKanban */
+        /**
+         * @copydoc IApresentacaoKanban::setCntrServicoKanban
+         */
         void setCntrServicoKanban(IServicoKanban* servico) override;
 };
 
