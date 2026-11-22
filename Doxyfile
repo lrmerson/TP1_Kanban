@@ -1,6 +1,7 @@
 # Identificação exibida na página inicial da documentação.
 PROJECT_NAME        = "TP1 Kanban"
 PROJECT_BRIEF       = "Sistema Kanban em C++17 com arquitetura em camadas"
+OUTPUT_LANGUAGE     = Portuguese
 
 # Cabeçalhos, implementações e documentação geral do projeto.
 INPUT          = include src README.md

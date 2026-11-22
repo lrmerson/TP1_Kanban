@@ -38,16 +38,16 @@ var NAVTREE =
     [ "Teste fumaça", "index.html#autotoc_md9", null ],
     [ "Documentação com Doxygen", "index.html#autotoc_md10", null ],
     [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", "functions_func" ]
+      [ "Lista de componentes", "annotated.html", "annotated_dup" ],
+      [ "Índice dos componentes", "classes.html", null ],
+      [ "Hierarquia de classes", "hierarchy.html", "hierarchy" ],
+      [ "Componentes membro", "functions.html", [
+        [ "Tudo", "functions.html", "functions_dup" ],
+        [ "Funções", "functions_func.html", "functions_func" ]
       ] ]
     ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+    [ "Ficheiros", "files.html", [
+      [ "Lista de ficheiros", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
@@ -58,6 +58,6 @@ var NAVTREEINDEX =
 "cntr__apresentacao__met_8hpp_source.html"
 ];
 
-const SYNCONMSG = 'click to disable panel synchronization';
-const SYNCOFFMSG = 'click to enable panel synchronization';
-const LISTOFALLMEMBERS = 'List of all members';
+const SYNCONMSG = 'clique para desativar a sincronização do painel';
+const SYNCOFFMSG = 'clique para ativar a sincronização do painel';
+const LISTOFALLMEMBERS = 'Mostrar lista completa dos membros';

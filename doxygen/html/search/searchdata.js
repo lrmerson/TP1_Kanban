@@ -16,9 +16,9 @@ var indexSectionNames =
 
 var indexSectionLabels =
 {
-  0: "All",
+  0: "Tudo",
   1: "Classes",
-  2: "Functions",
-  3: "Pages"
+  2: "Funções",
+  3: "Páginas"
 };
 
